@@ -1,4 +1,4 @@
-﻿using KLDFishStallAccounts.DTO.Invoice;
+﻿using KLDFishStallAccounts.DTO.Purchase;
 using KLDFishStallAccounts.Model;
 using KLDFishStallAccounts.Service.Contracts;
 using System;
@@ -16,195 +16,195 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public CashVoucherDTO AddCashVoucher(CashVoucherDTO cashVoucher)
+        public PaymentVoucherDTO AddPaymentVoucher(PaymentVoucherDTO paymentVoucher)
         {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == cashVoucher.FK_ID_Customer);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == paymentVoucher.FK_ID_Supplier);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            customer.Balance -= cashVoucher.Amount;
+            supplier.Balance -= paymentVoucher.Amount;
 
-            var cashVoucherToInsert = cashVoucher.Map();
-            _unitOfWork.Customer.Update(customer);
-            _unitOfWork.CashVoucher.Insert(cashVoucherToInsert);
+            var cashVoucherToInsert = paymentVoucher.Map();
+            _unitOfWork.Supplier.Update(supplier);
+            _unitOfWork.PaymentVoucher.Insert(cashVoucherToInsert);
             _unitOfWork.Commit();
 
-            return new CashVoucherDTO(cashVoucherToInsert);
+            return new PaymentVoucherDTO(cashVoucherToInsert);
         }
 
-        public InvoiceDTO AddInvoice(InvoiceDTO invoice)
+        public PurchaseInvoiceDTO AddPurchaseInvoice(PurchaseInvoiceDTO purchaseInvoice)
         {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == invoice.FK_ID_Customer);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == purchaseInvoice.FK_ID_Supplier);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            customer.Balance += invoice.Total;
+            supplier.Balance += purchaseInvoice.Total;
 
-            var invoiceToInsert = invoice.Map();
-            _unitOfWork.Customer.Update(customer);
-            _unitOfWork.Invoice.Insert(invoiceToInsert);
+            var invoiceToInsert = purchaseInvoice.Map();
+            _unitOfWork.Supplier.Update(supplier);
+            _unitOfWork.PurchaseInvoice.Insert(invoiceToInsert);
             _unitOfWork.Commit();
 
-            return new InvoiceDTO(invoiceToInsert);
+            return new PurchaseInvoiceDTO(invoiceToInsert);
         }
 
-        public void DeleteCashVoucher(int id)
+        public void DeletePaymentVoucher(int id)
         {
-            var cashVoucher = _unitOfWork.CashVoucher.Get(x => x.ID == id);
+            var cashVoucher = _unitOfWork.PaymentVoucher.Get(x => x.ID == id);
             if (cashVoucher == null)
                 throw new Exception("Could not find the voucher");
 
-            var customer = _unitOfWork.Customer.Get(x => x.ID == cashVoucher.FK_ID_Customer);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == cashVoucher.FK_ID_Supplier);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            customer.Balance += cashVoucher.Amount;
-            _unitOfWork.CashVoucher.Delete(x => x.ID == cashVoucher.ID);
-            _unitOfWork.Customer.Update(customer);
+            supplier.Balance += cashVoucher.Amount;
+            _unitOfWork.PaymentVoucher.Delete(x => x.ID == cashVoucher.ID);
+            _unitOfWork.Supplier.Update(supplier);
             _unitOfWork.Commit();
         }
 
-        public void DeleteInvoice(int id)
+        public void DeletePurchaseInvoice(int id)
         {
-            var invoice = _unitOfWork.Invoice.Get(x => x.ID == id);
+            var invoice = _unitOfWork.PurchaseInvoice.Get(x => x.ID == id);
             if (invoice == null)
                 throw new Exception("Could not find the invoice");
 
-            var customer = _unitOfWork.Customer.Get(x => x.ID == invoice.FK_ID_Customer);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == invoice.FK_ID_Supplier);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            customer.Balance -= invoice.Total;
-            _unitOfWork.Invoice.Delete(x => x.ID == invoice.ID);
-            _unitOfWork.Customer.Update(customer);
+            supplier.Balance -= invoice.Total;
+            _unitOfWork.PurchaseInvoice.Delete(x => x.ID == invoice.ID);
+            _unitOfWork.Supplier.Update(supplier);
             _unitOfWork.Commit();
         }
 
-        public CashVoucherDTO EditCashVoucher(CashVoucherDTO cashVoucher)
+        public PaymentVoucherDTO EditPaymentVoucher(PaymentVoucherDTO paymentVoucher)
         {
-            var cashVoucherFromDB = _unitOfWork.CashVoucher.Get(x => x.ID == cashVoucher.ID);
-            if (cashVoucherFromDB == null)
+            var paymentVoucherFromDB = _unitOfWork.PaymentVoucher.Get(x => x.ID == paymentVoucher.ID);
+            if (paymentVoucherFromDB == null)
                 throw new Exception("Could not find the voucher");
 
-            var oldCustomer = _unitOfWork.Customer.Get(x => x.ID == cashVoucherFromDB.FK_ID_Customer);
-            if (oldCustomer == null)
-                throw new Exception("Could not find the customer");
+            var oldSupplier = _unitOfWork.Supplier.Get(x => x.ID == paymentVoucherFromDB.FK_ID_Supplier);
+            if (oldSupplier == null)
+                throw new Exception("Could not find the supplier");
 
-            var newCustomer = _unitOfWork.Customer.Get(x => x.ID == cashVoucher.FK_ID_Customer);
-            if (newCustomer == null)
-                throw new Exception("Could not find the customer");
+            var newSupplier = _unitOfWork.Supplier.Get(x => x.ID == paymentVoucher.FK_ID_Supplier);
+            if (newSupplier == null)
+                throw new Exception("Could not find the supplier");
 
-            oldCustomer.Balance += cashVoucherFromDB.Amount;
-            _unitOfWork.Customer.Update(oldCustomer);
+            oldSupplier.Balance += paymentVoucherFromDB.Amount;
+            _unitOfWork.Supplier.Update(oldSupplier);
             _unitOfWork.Commit();
-            _unitOfWork.Customer.Detach(oldCustomer);
-            _unitOfWork.Commit();
-
-            cashVoucherFromDB.Amount = cashVoucher.Amount;
-            cashVoucherFromDB.Date = cashVoucher.Date;
-            cashVoucherFromDB.FK_ID_Customer = cashVoucher.FK_ID_Customer;
-            cashVoucherFromDB.Remarks = cashVoucher.Remarks;
-            _unitOfWork.CashVoucher.Update(cashVoucherFromDB);
-
-            newCustomer = _unitOfWork.Customer.Get(x => x.ID == cashVoucher.FK_ID_Customer);
-            newCustomer.Balance -= cashVoucher.Amount;
-            _unitOfWork.Customer.Update(newCustomer);
-
+            _unitOfWork.Supplier.Detach(oldSupplier);
             _unitOfWork.Commit();
 
-            return new CashVoucherDTO(cashVoucherFromDB);
+            paymentVoucherFromDB.Amount = paymentVoucher.Amount;
+            paymentVoucherFromDB.Date = paymentVoucher.Date;
+            paymentVoucherFromDB.FK_ID_Supplier = paymentVoucher.FK_ID_Supplier;
+            paymentVoucherFromDB.Remarks = paymentVoucher.Remarks;
+            _unitOfWork.PaymentVoucher.Update(paymentVoucherFromDB);
+
+            newSupplier = _unitOfWork.Supplier.Get(x => x.ID == paymentVoucher.FK_ID_Supplier);
+            newSupplier.Balance -= paymentVoucher.Amount;
+            _unitOfWork.Supplier.Update(newSupplier);
+
+            _unitOfWork.Commit();
+
+            return new PaymentVoucherDTO(paymentVoucherFromDB);
         }
 
-        public InvoiceDTO EditInvoice(InvoiceDTO invoice)
+        public PurchaseInvoiceDTO EditPurchaseInvoice(PurchaseInvoiceDTO purchaseInvoice)
         {
-            var invoiceFromDB = _unitOfWork.Invoice.Get(x => x.ID == invoice.ID);
+            var invoiceFromDB = _unitOfWork.PurchaseInvoice.Get(x => x.ID == purchaseInvoice.ID);
             if (invoiceFromDB == null)
                 throw new Exception("Could not find the invoice");
 
-            var oldCustomer = _unitOfWork.Customer.Get(x => x.ID == invoiceFromDB.FK_ID_Customer);
-            if (oldCustomer == null)
-                throw new Exception("Could not find the customer");
+            var oldSupplier = _unitOfWork.Supplier.Get(x => x.ID == invoiceFromDB.FK_ID_Supplier);
+            if (oldSupplier == null)
+                throw new Exception("Could not find the supplier");
 
-            var newCustomer = _unitOfWork.Customer.Get(x => x.ID == invoice.FK_ID_Customer);
-            if (newCustomer == null)
-                throw new Exception("Could not find the customer");
+            var newSupplier = _unitOfWork.Supplier.Get(x => x.ID == purchaseInvoice.FK_ID_Supplier);
+            if (newSupplier == null)
+                throw new Exception("Could not find the supplier");
 
-            oldCustomer.Balance -= invoiceFromDB.Total;
-            _unitOfWork.Customer.Update(oldCustomer);
+            oldSupplier.Balance -= invoiceFromDB.Total;
+            _unitOfWork.Supplier.Update(oldSupplier);
             _unitOfWork.Commit();
-            _unitOfWork.Customer.Detach(oldCustomer);
+            _unitOfWork.Supplier.Detach(oldSupplier);
             _unitOfWork.Commit();
 
-            invoiceFromDB.Total = invoice.Total;
-            invoiceFromDB.Date = invoice.Date;
-            invoiceFromDB.FK_ID_Customer = invoice.FK_ID_Customer;
-            invoiceFromDB.Balance = invoice.Balance;
-            invoiceFromDB.Discount = invoice.Discount;
-            _unitOfWork.Invoice.Update(invoiceFromDB);
+            invoiceFromDB.Total = purchaseInvoice.Total;
+            invoiceFromDB.Date = purchaseInvoice.Date;
+            invoiceFromDB.FK_ID_Supplier = purchaseInvoice.FK_ID_Supplier;
+            invoiceFromDB.Balance = purchaseInvoice.Balance;
+            invoiceFromDB.Discount = purchaseInvoice.Discount;
+            _unitOfWork.PurchaseInvoice.Update(invoiceFromDB);
 
-            newCustomer = _unitOfWork.Customer.Get(x => x.ID == invoice.FK_ID_Customer);
-            newCustomer.Balance += invoice.Total;
-            _unitOfWork.Customer.Update(newCustomer);
+            newSupplier = _unitOfWork.Supplier.Get(x => x.ID == purchaseInvoice.FK_ID_Supplier);
+            newSupplier.Balance += purchaseInvoice.Total;
+            _unitOfWork.Supplier.Update(newSupplier);
 
             _unitOfWork.InvoiceItem.Delete(x => x.FK_ID_Invoice == invoiceFromDB.ID);
             _unitOfWork.Commit();
 
 
-            var invoiceItems = invoice.InvoiceItems.Select(x => x.Map()).ToList();
-            invoiceItems.ForEach(x => x.FK_ID_Invoice = invoiceFromDB.ID);
-            _unitOfWork.InvoiceItem.InsertAll(invoiceItems);
+            var invoiceItems = purchaseInvoice.PurchaseInvoiceItems.Select(x => x.Map()).ToList();
+            invoiceItems.ForEach(x => x.FK_ID_PurchaseInvoice = invoiceFromDB.ID);
+            _unitOfWork.PurchaseInvoiceItem.InsertAll(invoiceItems);
             _unitOfWork.Commit();
 
-            invoiceFromDB = _unitOfWork.Invoice.Get(x => x.ID == invoiceFromDB.ID);
-            return new InvoiceDTO(invoiceFromDB);
+            invoiceFromDB = _unitOfWork.PurchaseInvoice.Get(x => x.ID == invoiceFromDB.ID);
+            return new PurchaseInvoiceDTO(invoiceFromDB);
         }
 
-        public List<CashVoucherDTO> GetAllCashVoucherByCustomerID(int id)
+        public List<PaymentVoucherDTO> GetAllPaymentVoucherBySupplierID(int id)
         {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == id);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == id);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            var cashVouchers = _unitOfWork.CashVoucher.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
-            return cashVouchers.Select(x => new CashVoucherDTO(x)).ToList();
+            var cashVouchers = _unitOfWork.PaymentVoucher.GetAllQueryable().Where(x => x.FK_ID_Supplier == id).ToList();
+            return cashVouchers.Select(x => new PaymentVoucherDTO(x)).ToList();
         }
 
-        public List<CashVoucherDTO> GetAllCashVouchers()
+        public List<PaymentVoucherDTO> GetAllPaymentVouchers()
         {
-            return _unitOfWork.CashVoucher.GetAll().Select(x => new CashVoucherDTO(x)).ToList();
+            return _unitOfWork.PaymentVoucher.GetAll().Select(x => new PaymentVoucherDTO(x)).ToList();
         }
 
-        public List<InvoiceDTO> GetAllInvoices()
+        public List<PurchaseInvoiceDTO> GetAllPurchaseInvoices()
         {
-            return _unitOfWork.Invoice.GetAll().Select(x => new InvoiceDTO(x)).ToList();
+            return _unitOfWork.PurchaseInvoice.GetAll().Select(x => new PurchaseInvoiceDTO(x)).ToList();
         }
 
-        public List<InvoiceDTO> GetAllInvoicesByCustomerID(int id)
+        public List<PurchaseInvoiceDTO> GetAllPurchaseInvoicesBySupplierID(int id)
         {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == id);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == id);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            var invoices = _unitOfWork.Invoice.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
-            return invoices.Select(x => new InvoiceDTO(x)).ToList();
+            var invoices = _unitOfWork.PurchaseInvoice.GetAllQueryable().Where(x => x.FK_ID_Supplier == id).ToList();
+            return invoices.Select(x => new PurchaseInvoiceDTO(x)).ToList();
         }
 
-        public CashVoucherDTO GetCashVoucherByID(int id)
+        public PaymentVoucherDTO GetPaymentVoucherByID(int id)
         {
-            var cashVoucher = _unitOfWork.CashVoucher.Get(x => x.ID == id);
+            var cashVoucher = _unitOfWork.PaymentVoucher.Get(x => x.ID == id);
             if (cashVoucher == null)
                 throw new Exception("Could not find the cash voucher");
 
-            return new CashVoucherDTO(cashVoucher);
+            return new PaymentVoucherDTO(cashVoucher);
         }
 
-        public InvoiceDTO GetInvoiceByID(int id)
+        public PurchaseInvoiceDTO GetPurchaseInvoiceByID(int id)
         {
-            var invoice = _unitOfWork.Invoice.Get(x => x.ID == id);
+            var invoice = _unitOfWork.PurchaseInvoice.Get(x => x.ID == id);
             if (invoice == null)
                 throw new Exception("Could not find the invoice");
 
-            return new InvoiceDTO(invoice);
+            return new PurchaseInvoiceDTO(invoice);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using KLDFishStallAccounts.DTO.Invoice;
+﻿using KLDFishStallAccounts.DTO.Purchase;
 using KLDFishStallAccounts.Service.Contracts;
 using KLDFishStallAccounts.WebApi.Attributes;
 using System.Collections.Generic;
@@ -17,75 +17,75 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<InvoiceDTO> GetAllInvoices()
+        public List<PurchaseInvoiceDTO> GetAllPurchaseInvoices()
         {
-            return _purchaseService.GetAllInvoices();
+            return _purchaseService.GetAllPurchaseInvoices();
         }
 
         [HttpGet]
-        public List<CashVoucherDTO> GetAllCashVouchers()
+        public List<PaymentVoucherDTO> GetAllPaymentVouchers()
         {
-            return _purchaseService.GetAllCashVouchers();
+            return _purchaseService.GetAllPaymentVouchers();
         }
 
         [HttpGet]
-        public InvoiceDTO GetInvoiceByID([FromUri]int id)
+        public PurchaseInvoiceDTO GetPurchaseInvoiceByID([FromUri]int id)
         {
-            return _purchaseService.GetInvoiceByID(id);
+            return _purchaseService.GetPurchaseInvoiceByID(id);
         }
 
         [HttpGet]
-        public CashVoucherDTO GetCashVoucherByID([FromUri]int id)
+        public PaymentVoucherDTO GetPaymentVoucherByID([FromUri]int id)
         {
-            return _purchaseService.GetCashVoucherByID(id);
+            return _purchaseService.GetPaymentVoucherByID(id);
         }
 
         [HttpGet]
-        public List<InvoiceDTO> GetAllInvoicesByCustomerID([FromUri]int id)
+        public List<PurchaseInvoiceDTO> GetAllPurchaseInvoicesBySupplierID([FromUri]int id)
         {
-            return _purchaseService.GetAllInvoicesByCustomerID(id);
+            return _purchaseService.GetAllPurchaseInvoicesBySupplierID(id);
         }
 
         [HttpGet]
-        public List<CashVoucherDTO> GetAllCashVoucherByCustomerID([FromUri]int id)
+        public List<PaymentVoucherDTO> GetAllPaymentVoucherBySupplierID([FromUri]int id)
         {
-            return _purchaseService.GetAllCashVoucherByCustomerID(id);
+            return _purchaseService.GetAllPaymentVoucherBySupplierID(id);
         }
 
         [HttpPost]
-        public InvoiceDTO AddInvoice([FromBody]InvoiceDTO invoice)
+        public PurchaseInvoiceDTO AddPurchaseInvoice([FromBody]PurchaseInvoiceDTO purchaseInvoice)
         {
-            return _purchaseService.AddInvoice(invoice);
+            return _purchaseService.AddPurchaseInvoice(purchaseInvoice);
         }
 
         [HttpPost]
-        public CashVoucherDTO AddCashVoucher([FromBody]CashVoucherDTO cashVoucher)
+        public PaymentVoucherDTO AddPaymentVoucher([FromBody]PaymentVoucherDTO paymentVoucher)
         {
-            return _purchaseService.AddCashVoucher(cashVoucher);
+            return _purchaseService.AddPaymentVoucher(paymentVoucher);
         }
 
         [HttpPost]
-        public InvoiceDTO EditInvoice([FromBody]InvoiceDTO invoice)
+        public PurchaseInvoiceDTO EditPurchaseInvoice([FromBody]PurchaseInvoiceDTO paymentInvoice)
         {
-            return _purchaseService.EditInvoice(invoice);
+            return _purchaseService.EditPurchaseInvoice(paymentInvoice);
         }
 
         [HttpPost]
-        public CashVoucherDTO EditCashVoucher([FromBody]CashVoucherDTO cashVoucher)
+        public PaymentVoucherDTO EditPaymentVoucher([FromBody]PaymentVoucherDTO paymentVoucher)
         {
-            return _purchaseService.EditCashVoucher(cashVoucher);
+            return _purchaseService.EditPaymentVoucher(paymentVoucher);
         }
 
         [HttpGet]
-        public void DeleteInvoice([FromUri] int id)
+        public void DeletePurchaseInvoice([FromUri] int id)
         {
-            _purchaseService.DeleteInvoice(id);
+            _purchaseService.DeletePurchaseInvoice(id);
         }
 
         [HttpGet]
-        public void DeleteCashVoucher([FromUri] int id)
+        public void DeletePaymentVoucher([FromUri] int id)
         {
-            _purchaseService.DeleteCashVoucher(id);
+            _purchaseService.DeletePaymentVoucher(id);
         }
     }
 }
