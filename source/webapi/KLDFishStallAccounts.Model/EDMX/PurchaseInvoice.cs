@@ -12,20 +12,22 @@ namespace KLDFishStallAccounts.Model.EDMX
     using System;
     using System.Collections.Generic;
     
-    public partial class Fish
+    public partial class PurchaseInvoice
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Fish()
+        public PurchaseInvoice()
         {
-            this.InvoiceItems = new HashSet<InvoiceItem>();
             this.PurchaseInvoiceItems = new HashSet<PurchaseInvoiceItem>();
         }
     
         public int ID { get; set; }
-        public string Name { get; set; }
+        public int FK_ID_Supplier { get; set; }
+        public System.DateTime Date { get; set; }
+        public double Discount { get; set; }
+        public double Total { get; set; }
+        public double Balance { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
+        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseInvoiceItem> PurchaseInvoiceItems { get; set; }
     }

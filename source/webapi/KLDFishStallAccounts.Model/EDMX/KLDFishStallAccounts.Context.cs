@@ -31,5 +31,9 @@ namespace KLDFishStallAccounts.Model.EDMX
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceItem> InvoiceItems { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<PaymentVoucher> PaymentVouchers { get; set; }
+        public virtual DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
+        public virtual DbSet<PurchaseInvoiceItem> PurchaseInvoiceItems { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
     }
 }

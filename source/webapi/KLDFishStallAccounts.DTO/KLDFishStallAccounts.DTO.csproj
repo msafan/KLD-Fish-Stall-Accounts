@@ -41,11 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DateRange.cs" />
+    <Compile Include="Supplier\SupplierDTO.cs" />
+    <Compile Include="Supplier\SupplierStatement.cs" />
     <Compile Include="Customer\CustomerDTO.cs" />
     <Compile Include="Customer\CustomerStatement.cs" />
     <Compile Include="DataTransferObject.cs" />
     <Compile Include="Fish\FishDTO.cs" />
     <Compile Include="IDataTransferObjectConvertible.cs" />
+    <Compile Include="Purchase\PaymentVoucherDTO.cs" />
+    <Compile Include="Purchase\PurchaseInvoiceDTO.cs" />
+    <Compile Include="Purchase\PurchaseInvoiceItemDTO.cs" />
     <Compile Include="Invoice\CashVoucherDTO.cs" />
     <Compile Include="Invoice\InvoiceDTO.cs" />
     <Compile Include="Invoice\InvoiceItemDTO.cs" />

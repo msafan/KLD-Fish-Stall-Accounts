@@ -15,6 +15,14 @@
         <AssociationConnector Association="KLDFishStallAccountsModel.FK_Invoice_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="KLDFishStallAccountsModel.FK_InvoiceItem_Fish" ManuallyRouted="false" />
         <AssociationConnector Association="KLDFishStallAccountsModel.FK_InvoiceItem_Invoice" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KLDFishStallAccountsModel.PaymentVoucher" Width="1.5" PointX="9.625" PointY="7.375" />
+        <EntityTypeShape EntityType="KLDFishStallAccountsModel.PurchaseInvoice" Width="1.5" PointX="9.625" PointY="4.125" />
+        <EntityTypeShape EntityType="KLDFishStallAccountsModel.PurchaseInvoiceItem" Width="1.5" PointX="11.875" PointY="5.375" />
+        <EntityTypeShape EntityType="KLDFishStallAccountsModel.Supplier" Width="1.5" PointX="7.375" PointY="5.625" />
+        <AssociationConnector Association="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_Fish" />
+        <AssociationConnector Association="KLDFishStallAccountsModel.FK_PaymentVoucher_Supplier" />
+        <AssociationConnector Association="KLDFishStallAccountsModel.FK_PurchaseInvoice_Supplier" />
+        <AssociationConnector Association="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_PurchaseInvoice" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
