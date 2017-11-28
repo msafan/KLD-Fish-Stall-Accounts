@@ -1,16 +1,16 @@
 ﻿using KLDFishStallAccounts.DTO.Common;
-using KLDFishStallAccounts.DTO.Customer;
+using KLDFishStallAccounts.DTO.Supplier;
 using System.Collections.Generic;
 
 namespace KLDFishStallAccounts.Service.Contracts
 {
     public interface ISupplier
     {
-        List<CustomerDTO> GetAllCustomers();
-        CustomerDTO GetCustomerByID(int id);
-        CustomerDTO AddCustomer(CustomerDTO customer);
-        CustomerDTO EditCustomer(CustomerDTO customer);
-        void DeleteCustomer(int id);
-        List<CustomerStatement> GetCustomerStatement(int id, DateRange dateRange);
+        List<SupplierDTO> GetAllSuppliers();
+        SupplierDTO GetSupplierByID(int id);
+        SupplierDTO AddSupplier(SupplierDTO Supplier);
+        SupplierDTO EditSupplier(SupplierDTO Supplier);
+        void DeleteSupplier(int id);
+        List<SupplierStatement> GetSupplierStatement(int id, DateRange dateRange);
     }
 }

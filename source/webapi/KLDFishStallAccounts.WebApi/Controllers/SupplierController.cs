@@ -1,8 +1,7 @@
 ﻿using KLDFishStallAccounts.DTO.Common;
-using KLDFishStallAccounts.DTO.Customer;
+using KLDFishStallAccounts.DTO.Supplier;
 using KLDFishStallAccounts.Service.Contracts;
 using KLDFishStallAccounts.WebApi.Attributes;
-using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -19,39 +18,39 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<CustomerDTO> GetAllCustomers()
+        public List<SupplierDTO> GetAllSuppliers()
         {
-            return _supplierService.GetAllCustomers();
+            return _supplierService.GetAllSuppliers();
         }
 
         [HttpGet]
-        public CustomerDTO GetCustomerByID([FromUri] int id)
+        public SupplierDTO GetSupplierByID([FromUri] int id)
         {
-            return _supplierService.GetCustomerByID(id);
+            return _supplierService.GetSupplierByID(id);
         }
 
         [HttpPost]
-        public CustomerDTO AddCustomer([FromBody]CustomerDTO customer)
+        public SupplierDTO AddSupplier([FromBody]SupplierDTO Supplier)
         {
-            return _supplierService.AddCustomer(customer);
+            return _supplierService.AddSupplier(Supplier);
         }
 
         [HttpPost]
-        public CustomerDTO EditCustomer([FromBody] CustomerDTO customer)
+        public SupplierDTO EditSupplier([FromBody] SupplierDTO Supplier)
         {
-            return _supplierService.EditCustomer(customer);
+            return _supplierService.EditSupplier(Supplier);
         }
 
         [HttpGet]
-        public void DeleteCustomer([FromUri]int id)
+        public void DeleteSupplier([FromUri]int id)
         {
-            _supplierService.DeleteCustomer(id);
+            _supplierService.DeleteSupplier(id);
         }
 
         [HttpPost]
-        public List<CustomerStatement> GetCustomerStatement([FromUri]int id,[FromBody]DateRange dateRange)
+        public List<SupplierStatement> GetSupplierStatement([FromUri]int id,[FromBody]DateRange dateRange)
         {
-            return _supplierService.GetCustomerStatement(id, dateRange);
+            return _supplierService.GetSupplierStatement(id, dateRange);
         }
     }
 }

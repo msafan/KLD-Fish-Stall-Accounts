@@ -1,5 +1,5 @@
 ﻿using KLDFishStallAccounts.DTO.Common;
-using KLDFishStallAccounts.DTO.Customer;
+using KLDFishStallAccounts.DTO.Supplier;
 using KLDFishStallAccounts.Model;
 using KLDFishStallAccounts.Model.EDMX;
 using KLDFishStallAccounts.Service.Contracts;
@@ -17,87 +17,87 @@ namespace KLDFishStallAccounts.Service.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public CustomerDTO AddCustomer(CustomerDTO customer)
+        public SupplierDTO AddSupplier(SupplierDTO supplier)
         {
-            var customerFromDB = _unitOfWork.Customer.Get(x => x.Name.ToLowerInvariant() == customer.Name.ToLowerInvariant());
-            if (customerFromDB != null)
-                throw new Exception($"Customer {customer.Name} already exists");
+            var supplierFromDB = _unitOfWork.Supplier.Get(x => x.Name.ToLowerInvariant() == supplier.Name.ToLowerInvariant());
+            if (supplierFromDB != null)
+                throw new Exception($"Supplier {supplier.Name} already exists");
 
-            var customerToInsert = customer.Map();
-            _unitOfWork.Customer.Insert(customerToInsert);
+            var supplierToInsert = supplier.Map();
+            _unitOfWork.Supplier.Insert(supplierToInsert);
             _unitOfWork.Commit();
 
-            return new CustomerDTO(customerToInsert);
+            return new SupplierDTO(supplierToInsert);
         }
 
-        public void DeleteCustomer(int id)
+        public void DeleteSupplier(int id)
         {
-            var containsCashVoucher = _unitOfWork.CashVoucher.GetAllQueryable().Any(x => x.FK_ID_Customer == id);
+            var containsCashVoucher = _unitOfWork.PaymentVoucher.GetAllQueryable().Any(x => x.FK_ID_Supplier == id);
             if (containsCashVoucher)
-                throw new Exception("Customer has cash voucher. Hence, cannot delete customer");
+                throw new Exception("Supplier has cash voucher. Hence, cannot delete supplier");
 
-            var containsInvoice = _unitOfWork.CashVoucher.GetAllQueryable().Any(x => x.FK_ID_Customer == id);
+            var containsInvoice = _unitOfWork.PaymentVoucher.GetAllQueryable().Any(x => x.FK_ID_Supplier == id);
             if (containsInvoice)
-                throw new Exception("Customer has invoices. Hence, cannot delete customer");
+                throw new Exception("Supplier has invoices. Hence, cannot delete supplier");
 
-            _unitOfWork.Customer.Delete(x => x.ID == id);
+            _unitOfWork.Supplier.Delete(x => x.ID == id);
             _unitOfWork.Commit();
         }
 
-        public CustomerDTO EditCustomer(CustomerDTO customer)
+        public SupplierDTO EditSupplier(SupplierDTO supplier)
         {
-            var customerToUpdate = _unitOfWork.Customer.Get(x => x.ID == customer.ID);
-            if (customerToUpdate == null)
-                throw new Exception("Could not find the customer");
+            var supplierToUpdate = _unitOfWork.Supplier.Get(x => x.ID == supplier.ID);
+            if (supplierToUpdate == null)
+                throw new Exception("Could not find the supplier");
 
-            if (customerToUpdate.Name.ToLowerInvariant() != customer.Name.ToLowerInvariant())
+            if (supplierToUpdate.Name.ToLowerInvariant() != supplier.Name.ToLowerInvariant())
             {
-                var customerWithName = _unitOfWork.Customer.Get(x => x.Name.ToLowerInvariant() == customer.Name.ToLowerInvariant());
-                if (customerWithName != null)
-                    throw new Exception($"Customer {customer.Name} already exists");
+                var supplierWithName = _unitOfWork.Supplier.Get(x => x.Name.ToLowerInvariant() == supplier.Name.ToLowerInvariant());
+                if (supplierWithName != null)
+                    throw new Exception($"Supplier {supplier.Name} already exists");
             }
 
-            customerToUpdate.Address = customer.Address;
-            customerToUpdate.Name = customer.Name;
-            customerToUpdate.PhoneNumber = customer.PhoneNumber;
+            supplierToUpdate.Address = supplier.Address;
+            supplierToUpdate.Name = supplier.Name;
+            supplierToUpdate.PhoneNumber = supplier.PhoneNumber;
 
-            _unitOfWork.Customer.Update(customerToUpdate);
+            _unitOfWork.Supplier.Update(supplierToUpdate);
             _unitOfWork.Commit();
 
-            return new CustomerDTO(customerToUpdate);
+            return new SupplierDTO(supplierToUpdate);
         }
 
-        public List<CustomerDTO> GetAllCustomers()
+        public List<SupplierDTO> GetAllSuppliers()
         {
-            return _unitOfWork.Customer.GetAll().Select(x => new CustomerDTO(x)).ToList();
+            return _unitOfWork.Supplier.GetAll().Select(x => new SupplierDTO(x)).ToList();
         }
 
-        public CustomerDTO GetCustomerByID(int id)
+        public SupplierDTO GetSupplierByID(int id)
         {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == id);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == id);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
-            return new CustomerDTO(customer);
+            return new SupplierDTO(supplier);
         }
 
-        public List<CustomerStatement> GetCustomerStatement(int id, DateRange dateRange)
+        public List<SupplierStatement> GetSupplierStatement(int id, DateRange dateRange)
         {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == id);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
+            var supplier = _unitOfWork.Supplier.Get(x => x.ID == id);
+            if (supplier == null)
+                throw new Exception("Could not find the supplier");
 
             if (dateRange == null)
                 dateRange = new DateRange() { StartDate = new DateTime(1, 1, 1), EndDate = new DateTime(5000, 12, 31) };
 
-            var customerStatements = new List<CustomerStatement>();
+            var supplierStatements = new List<SupplierStatement>();
 
-            customerStatements.AddRange(_unitOfWork.Invoice.
+            supplierStatements.AddRange(_unitOfWork.PurchaseInvoice.
                 GetAllQueryable().
-                Where(x => x.FK_ID_Customer == id &&
+                Where(x => x.FK_ID_Supplier == id &&
                     x.Date >= dateRange.StartDate &&
                     x.Date <= dateRange.EndDate).
-                Select(x => new CustomerStatement()
+                Select(x => new SupplierStatement()
                 {
                     Amount = x.Total,
                     Date = x.Date,
@@ -105,12 +105,12 @@ namespace KLDFishStallAccounts.Service.Services
                     Particulars = "Sales Invoice"
                 }));
 
-            customerStatements.AddRange(_unitOfWork.CashVoucher.
+            supplierStatements.AddRange(_unitOfWork.PaymentVoucher.
                 GetAllQueryable().
-                Where(x => x.FK_ID_Customer == id &&
+                Where(x => x.FK_ID_Supplier == id &&
                     x.Date >= dateRange.StartDate &&
                     x.Date <= dateRange.EndDate).
-                Select(x => new CustomerStatement()
+                Select(x => new SupplierStatement()
                 {
                     Amount = x.Amount,
                     Date = x.Date,
@@ -118,39 +118,39 @@ namespace KLDFishStallAccounts.Service.Services
                     Particulars = "Cash Payment Voucher"
                 }));
 
-            var customerStatementsToReturn = customerStatements.OrderBy(x => x.Date).ToList();
+            var supplierStatementsToReturn = supplierStatements.OrderBy(x => x.Date).ToList();
 
-            var hasCashVouchersBeyondDate = _unitOfWork.CashVoucher.GetAllQueryable().Any(x => x.FK_ID_Customer == id && x.Date > dateRange.EndDate);
-            var hasInvoicesBeyondDate = _unitOfWork.Invoice.GetAllQueryable().Any(x => x.FK_ID_Customer == id && x.Date > dateRange.EndDate);
+            var hasCashVouchersBeyondDate = _unitOfWork.PaymentVoucher.GetAllQueryable().Any(x => x.FK_ID_Supplier == id && x.Date > dateRange.EndDate);
+            var hasInvoicesBeyondDate = _unitOfWork.PurchaseInvoice.GetAllQueryable().Any(x => x.FK_ID_Supplier == id && x.Date > dateRange.EndDate);
             if (hasCashVouchersBeyondDate || hasInvoicesBeyondDate)
-                return customerStatementsToReturn;
+                return supplierStatementsToReturn;
 
-            customerStatementsToReturn.Reverse();
+            supplierStatementsToReturn.Reverse();
 
-            var currentBalance = customer.Balance;
-            customerStatementsToReturn.ForEach(x =>
+            var currentBalance = supplier.Balance;
+            supplierStatementsToReturn.ForEach(x =>
             {
                 x.Balance = currentBalance;
                 currentBalance += (x.Amount * (x.Particulars == "Sales Invoice" ? -1 : 1));
             });
 
-            customerStatementsToReturn.Reverse();
+            supplierStatementsToReturn.Reverse();
 
-            customerStatementsToReturn.Insert(0, new CustomerStatement()
+            supplierStatementsToReturn.Insert(0, new SupplierStatement()
             {
                 ID = int.MinValue,
                 Particulars = "Opening Balance",
                 Amount = currentBalance,
                 Balance = currentBalance
             });
-            customerStatementsToReturn.Add(new CustomerStatement()
+            supplierStatementsToReturn.Add(new SupplierStatement()
             {
                 ID = int.MinValue,
                 Particulars = "Closing Balance",
-                Balance = customer.Balance
+                Balance = supplier.Balance
             });
 
-            return customerStatementsToReturn;
+            return supplierStatementsToReturn;
         }
     }
 }
