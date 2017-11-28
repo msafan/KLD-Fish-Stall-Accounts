@@ -26,8 +26,10 @@ namespace KLDFishStallAccounts.WebApi.CastleDI
                 Classes.FromThisAssembly().BasedOn<IHttpController>().LifestyleTransient(),
 
                 Component.For<ICustomer>().ImplementedBy<CustomerService>().LifeStyle.PerWebRequest,
+                Component.For<ISupplier>().ImplementedBy<SupplierService>().LifeStyle.PerWebRequest,
                 Component.For<IFish>().ImplementedBy<FishService>().LifeStyle.PerWebRequest,
                 Component.For<IInvoice>().ImplementedBy<InvoiceService>().LifeStyle.PerWebRequest,
+                Component.For<IPurchase>().ImplementedBy<PurchaseService>().LifeStyle.PerWebRequest,
                 Component.For<IUser>().ImplementedBy<UserService>().LifeStyle.PerWebRequest
             );
         }

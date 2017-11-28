@@ -185,6 +185,8 @@
     <Compile Include="Attributes\ExceptionHandler.cs" />
     <Compile Include="CastleDI\DependencyInstaller.cs" />
     <Compile Include="CastleDI\WindsorActivator.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\FishController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
