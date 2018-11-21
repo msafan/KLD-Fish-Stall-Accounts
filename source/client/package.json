@@ -22,7 +22,11 @@
     "@angular/router": "~7.0.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "bootstrap": "3.3.7",
+    "jquery": "3.3.1",
+    "font-awesome": "4.7.0",
+    "metismenu": "3.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",
@@ -44,5 +48,10 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.6"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

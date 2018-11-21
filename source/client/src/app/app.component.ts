@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'KLD-Fish-Stall-Accounts';
+
+  public _isLoggedIn: boolean;
+
+  constructor() {
+    this._isLoggedIn = true;
+  }
 }
