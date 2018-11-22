@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 
 export class SaleItem {
+  FishName: string;
   FK_ID_Fish: number;
   Quantity: number;
   Rate: number;
