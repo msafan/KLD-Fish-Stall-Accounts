@@ -4,17 +4,33 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 
+export class SaleItem {
+  FK_ID_Fish: number;
+  Quantity: number;
+  Rate: number;
+  Amount: number;
+}
+
+export class GridOptions {
+  Columns: Array<GridColumn>;
+  Filterable: boolean;
+  IsPaginated: boolean;
+  PageSize: number;
+}
+
 export class GridColumn {
   Name: string;
   Title: string;
   Type: string;
   Filter: GridFilter;
+  Visible: boolean;
 
-  constructor(name: string, title: string, type: string, filter: GridFilter) {
+  constructor(name: string, title: string, type: string, visible: boolean, filter: GridFilter) {
     this.Name = name;
     this.Title = title;
     this.Type = type;
     this.Filter = filter;
+    this.Visible = visible;
   }
 }
 
