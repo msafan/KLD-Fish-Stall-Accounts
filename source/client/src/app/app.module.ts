@@ -11,6 +11,7 @@ import { ManageCustomerComponent } from './manage-customer/manage-customer.compo
 import { ManageFishComponent } from './manage-fish/manage-fish.component';
 import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
 import { NewCashVoucherComponent } from './new-cash-voucher/new-cash-voucher.component';
+import { GridComponent } from './grid/grid.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NewCashVoucherComponent } from './new-cash-voucher/new-cash-voucher.com
     ManageCustomerComponent,
     ManageFishComponent,
     NewInvoiceComponent,
-    NewCashVoucherComponent
+    NewCashVoucherComponent,
+    GridComponent
   ],
   imports: [
     BrowserModule,
