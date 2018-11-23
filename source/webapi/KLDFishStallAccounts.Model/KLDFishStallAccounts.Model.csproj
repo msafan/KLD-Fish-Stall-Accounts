@@ -30,8 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,10 +51,72 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EDMX\CashVoucher.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\Customer.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\Fish.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\Invoice.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\InvoiceItem.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\KLDFishStallAccounts.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KLDFishStallAccounts.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\KLDFishStallAccounts.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\KLDFishStallAccounts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\User.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EntityDeploy Include="EDMX\KLDFishStallAccounts.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KLDFishStallAccounts.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EDMX\" />
+    <None Include="App.Config" />
+    <None Include="EDMX\KLDFishStallAccounts.edmx.diagram">
+      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EDMX\KLDFishStallAccounts.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>KLDFishStallAccounts.Context.cs</LastGenOutput>
+      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
+    </Content>
+    <Content Include="EDMX\KLDFishStallAccounts.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
+      <LastGenOutput>KLDFishStallAccounts.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

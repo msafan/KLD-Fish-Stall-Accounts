@@ -233,8 +233,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Attributes\ExceptionHandler.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\FishController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -315,6 +319,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KLDFishStallAccounts.DTO\KLDFishStallAccounts.DTO.csproj">
+      <Project>{F867FCA8-B53A-4EE9-97FD-7D8AC6379E46}</Project>
+      <Name>KLDFishStallAccounts.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KLDFishStallAccounts.Model\KLDFishStallAccounts.Model.csproj">
+      <Project>{04D61A32-68B3-4A9A-95C1-E10900A0AB9D}</Project>
+      <Name>KLDFishStallAccounts.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KLDFishStallAccounts.Service\KLDFishStallAccounts.Service.csproj">
+      <Project>{73C0DD52-5866-44CB-A06B-CD47B0B9012E}</Project>
+      <Name>KLDFishStallAccounts.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

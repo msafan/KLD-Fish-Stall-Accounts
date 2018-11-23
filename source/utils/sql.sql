@@ -71,7 +71,7 @@ create table [dbo].[InvoiceItem]
 	[Rate] [float] not null,
 	[Total] [float] not null,
 	constraint [PK_InvoiceItem_ID] primary key clustered ([ID] asc),
-	constraint [FK_InvoiceItem_Invoice] foreign key ([FK_ID_Invoice]) references [dbo].[Invoice] ([ID]),
+	constraint [FK_InvoiceItem_Invoice] foreign key ([FK_ID_Invoice]) references [dbo].[Invoice] ([ID]) on delete cascade,
 	constraint [FK_InvoiceItem_Fish] foreign key ([FK_ID_Fish]) references [dbo].[Fish] ([ID])
 )
 
