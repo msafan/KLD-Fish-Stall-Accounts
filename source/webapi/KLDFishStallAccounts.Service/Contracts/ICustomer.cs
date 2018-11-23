@@ -16,8 +16,6 @@ namespace KLDFishStallAccounts.Service.Contracts
         Customer AddCustomer(Customer customer);
         Customer EditCustomer(Customer customer);
         void DeleteCustomer(int id);
-        List<Invoice> GetAllInvoicesByCustomerID(int id);
-        List<CashVoucher> GetAllCashVoucherByCustomerID(int id);
         List<CustomerStatement> GetCustomerStatement(int id, DateRange dateRange);
     }
 }

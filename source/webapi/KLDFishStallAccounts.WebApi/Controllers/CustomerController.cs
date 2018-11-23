@@ -48,18 +48,6 @@ namespace KLDFishStallAccounts.WebApi.Controllers
             _customerService.DeleteCustomer(id);
         }
 
-        [HttpGet]
-        public List<Invoice> GetAllInvoicesByCustomerID([FromUri]int id)
-        {
-            return _customerService.GetAllInvoicesByCustomerID(id);
-        }
-
-        [HttpGet]
-        public List<CashVoucher> GetAllCashVoucherByCustomerID([FromUri]int id)
-        {
-            return _customerService.GetAllCashVoucherByCustomerID(id);
-        }
-
         [HttpPost]
         public List<CustomerStatement> GetCustomerStatement([FromUri] int id, [FromBody]DateRange dateRange)
         {

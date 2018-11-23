@@ -66,27 +66,9 @@ namespace KLDFishStallAccounts.Service.Services
             return customerToUpdate;
         }
 
-        public List<CashVoucher> GetAllCashVoucherByCustomerID(int id)
-        {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == id);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
-
-            return _unitOfWork.CashVoucher.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
-        }
-
         public List<Customer> GetAllCustomers()
         {
             return _unitOfWork.Customer.GetAll().ToList();
-        }
-
-        public List<Invoice> GetAllInvoicesByCustomerID(int id)
-        {
-            var customer = _unitOfWork.Customer.Get(x => x.ID == id);
-            if (customer == null)
-                throw new Exception("Could not find the customer");
-
-            return _unitOfWork.Invoice.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
         }
 
         public Customer GetCustomerByID(int id)
