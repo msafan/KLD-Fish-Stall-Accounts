@@ -9,22 +9,9 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
   styleUrls: ['./auto-complete-text-box.component.css']
 })
 export class AutoCompleteTextBoxComponent implements OnInit {
-  @Input('value') value: string;
-  @Input('suggestions') suggestions: Array<string> = new Array<string>();
-  @Output('changed') changed: EventEmitter<string> = new EventEmitter<string>();
-
-  // @ViewChild('instance') instance: NgbTypeahead;
-
-  // search = (text$: Observable<string>) => {
-  //   const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-  //   const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-  //   const inputFocus$ = this.focus$;
-
-  //   return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-  //     map(term => (term === '' ? this.suggestions
-  //       : this.suggestions.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
-  //   );
-  // }
+  @Input() value: string;
+  @Input() suggestions: Array<string> = new Array<string>();
+  @Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
   search = (text$: Observable<string>) =>
     text$.pipe(
