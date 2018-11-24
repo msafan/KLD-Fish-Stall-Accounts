@@ -36,7 +36,7 @@ export class InvoiceItem {
   FK_ID_Fish: number;
   Quantity: number;
   Rate: number;
-  Amount: number;
+  Total: number;
 }
 
 export class WebApiError {

@@ -4,6 +4,7 @@ import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap
 import { WebapiService } from '../webapi.service';
 import { NotifierService } from 'angular-notifier';
 import { AutoCompleteTextBoxComponent } from '../auto-complete-text-box/auto-complete-text-box.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-invoice',
@@ -20,7 +21,7 @@ export class NewInvoiceComponent implements OnInit {
     Discount: 0,
     FK_ID_Customer: -1,
     Total: 0,
-    InvoiceItems: [{ Amount: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }]
+    InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }]
   };
   _customers: Array<Customer> = [];
   _customerNames: Array<string> = [];
@@ -30,10 +31,13 @@ export class NewInvoiceComponent implements OnInit {
   _fishNames: Array<string> = [];
 
   _canByPass: boolean = true;
+  _includeBalance: boolean = false;
+  _isEditing: boolean = false;
 
   @ViewChild(AutoCompleteTextBoxComponent) _customerTextBox: AutoCompleteTextBoxComponent;
 
-  constructor(private webApiService: WebapiService, private notifier: NotifierService) {
+  constructor(private webApiService: WebapiService, private notifier: NotifierService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -41,10 +45,20 @@ export class NewInvoiceComponent implements OnInit {
     this.getAllFishes();
   }
 
+  getInvoiceByID(ID: number) {
+    this.webApiService.Get<Invoice>('Invoice/GetInvoiceByID/?id=' + ID, (response, error) => {
+      if (error) {
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
+      } else if (response) {
+        this._invoice = response;
+      }
+    });
+  }
+
   getAllFishes() {
     this.webApiService.Get<Array<Fish>>('Fish/GetAllFishes', (response, error) => {
       if (error) {
-        this.notifier.notify('error', error.error.ExceptionMessage);
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
         this._fishes = response;
         this._fishNames = this._fishes.map((item) => item.Name);
@@ -55,7 +69,7 @@ export class NewInvoiceComponent implements OnInit {
   getAllCustomers() {
     this.webApiService.Get<Array<Customer>>('Customer/GetAllCustomers', (response, error) => {
       if (error) {
-        this.notifier.notify('error', error.error.ExceptionMessage);
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
         this._customers = response;
         this._customerNames = this._customers.map((item) => item.Name);
@@ -64,15 +78,24 @@ export class NewInvoiceComponent implements OnInit {
   }
 
   customerChanged(customerName: string) {
+    if (customerName === '') {
+      this._selectedCustomer = { ID: -1, Address: '', Balance: 0, Name: '', PhoneNumber: '' };
+      this._invoice.FK_ID_Customer = -1;
+      return;
+    }
     this._selectedCustomer = this._customers.filter((item) => item.Name === customerName)[0];
     this._invoice.FK_ID_Customer = this._selectedCustomer.ID;
   }
 
   fishChanged(fishName: string, invoiceItem: InvoiceItem) {
+    if (fishName === '') {
+      invoiceItem.FK_ID_Fish = -1;
+      return;
+    }
     let fish = this._fishes.filter((item) => item.Name === fishName)[0];
     invoiceItem.FK_ID_Fish = fish.ID;
     if (this._invoice.InvoiceItems[this._invoice.InvoiceItems.length - 1].FK_ID_Fish !== -1) {
-      this._invoice.InvoiceItems.push({ Amount: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0 });
+      this._invoice.InvoiceItems.push({ Total: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0 });
     }
   }
 
@@ -86,7 +109,7 @@ export class NewInvoiceComponent implements OnInit {
         }).
       forEach(
         function (x) {
-          x.Amount = x.Quantity * x.Rate;
+          x.Total = x.Quantity * x.Rate;
         });
     this.calculateGrandTotal();
   }
@@ -102,7 +125,7 @@ export class NewInvoiceComponent implements OnInit {
         }).
       forEach(
         function (x) {
-          total = total + x.Amount;
+          total = total + x.Total;
         });
 
     this._invoice.Total = total - this._invoice.Discount;
@@ -116,24 +139,50 @@ export class NewInvoiceComponent implements OnInit {
       Discount: 0,
       FK_ID_Customer: -1,
       Total: 0,
-      InvoiceItems: [{ Amount: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }]
+      InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }]
     };
 
     this._selectedCustomer = { ID: -1, Address: '', Balance: 0, Name: '', PhoneNumber: '' };
     this._customerTextBox.clear();
     this._canByPass = true;
+
+    if (this._isEditing)
+      this.router.navigate(['/list-invoice']);
   }
 
   save() {
     this._canByPass = false;
+    if (this._includeBalance)
+      this._invoice.Balance = this._selectedCustomer.Balance;
+
     if (!this.isFormValid())
       return;
 
+    this._invoice.InvoiceItems = this._invoice.InvoiceItems.filter(x => x.FK_ID_Fish !== -1);
+
     if (this._invoice.ID !== -1) {
-      //Edit
+      this.webApiService.Post<Invoice>('Invoice/EditInvoice', this._invoice, (response, error) => {
+        if (error) {
+          this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
+        } else if (response) {
+          this.notifier.notify('success', 'Invoice #' + response.ID + ' updated successfully');
+          this.cancel();
+          return;
+        }
+      });
     } else {
-      //Add
+      this.webApiService.Post<Invoice>('Invoice/AddInvoice', this._invoice, (response, error) => {
+        if (error) {
+          this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
+        } else if (response) {
+          this.notifier.notify('success', 'Invoice #' + response.ID + ' added successfully');
+          this.cancel();
+          return;
+        }
+      });
     }
+
+    this._invoice.InvoiceItems.push({ Total: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0 });
   }
 
   isFormValid() {
@@ -153,8 +202,8 @@ export class NewInvoiceComponent implements OnInit {
     let isValid: boolean = true;
     let validItemCount: number = 0;
     this._invoice.InvoiceItems.
-      filter(x => x.ID !== -1).
-      forEach(x => { if (x.Amount === 0) isValid = false; else validItemCount++; });
+      filter(x => x.FK_ID_Fish !== -1).
+      forEach(x => { if (!x.Total) isValid = false; else validItemCount++; });
 
     if (!isValid)
       return false;

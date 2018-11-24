@@ -35,7 +35,7 @@ export class ManageFishComponent implements OnInit {
   getAllFishes() {
     this.webApiService.Get<Array<Fish>>('Fish/GetAllFishes', (response, error) => {
       if (error) {
-        this.notifier.notify('error', error.error.ExceptionMessage);
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
         this._grid.clear();
         this._grid.addRows(response);
@@ -58,7 +58,7 @@ export class ManageFishComponent implements OnInit {
     if (this._fish.ID != -1) {
       this.webApiService.Post<Fish>('Fish/EditFish', this._fish, (response, error) => {
         if (error) {
-          this.notifier.notify('error', error.error.ExceptionMessage);
+          this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
         } else if (response) {
           this.getAllFishes();
           this.clear();
@@ -68,7 +68,7 @@ export class ManageFishComponent implements OnInit {
     } else {
       this.webApiService.Post<Fish>('Fish/AddFish', this._fish, (response, error) => {
         if (error) {
-          this.notifier.notify('error', error.error.ExceptionMessage);
+          this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
         } else if (response) {
           this.getAllFishes();
           this.clear();
@@ -102,7 +102,7 @@ export class ManageFishComponent implements OnInit {
   deleteFish() {
     this.webApiService.Get<any>('Fish/DeleteFish/?id=' + this._selectedFish.ID, (response, error) => {
       if (error) {
-        this.notifier.notify('error', error.error.ExceptionMessage);
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else {
         this.getAllFishes();
         this.clear();

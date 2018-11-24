@@ -82,7 +82,7 @@
             </td>
             <td>
               <div class="form-group text-center">
-                <strong>{{invoiceItem.Amount}}</strong>
+                <strong>{{invoiceItem.Total}}</strong>
               </div>
             </td>
           </tr>
@@ -107,7 +107,14 @@
 </div>
 <br>
 <div class="row">
-  <div class="col-lg-8"></div>
+  <div class="col-lg-8 text-right">
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="_includeBalance" />
+        Include Balance: Rs.{{_selectedCustomer.Balance}}
+      </label>
+    </div>
+  </div>
   <div class="col-lg-2">
     <button class="btn btn-default btn-block" (click)="cancel()">Cancel</button>
   </div>

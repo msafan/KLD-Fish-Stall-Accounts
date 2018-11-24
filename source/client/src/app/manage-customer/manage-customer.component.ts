@@ -37,7 +37,7 @@ export class ManageCustomerComponent implements OnInit {
   getAllCustomers() {
     this.webApiService.Get<Array<Customer>>('Customer/GetAllCustomers', (response, error) => {
       if (error) {
-        this.notifier.notify('error', error.error.ExceptionMessage);
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
         this._grid.clear();
         this._grid.addRows(response);
@@ -60,7 +60,7 @@ export class ManageCustomerComponent implements OnInit {
     if (this._customer.ID != -1) {
       this.webApiService.Post<Customer>('Customer/EditCustomer', this._customer, (response, error) => {
         if (error) {
-          this.notifier.notify('error', error.error.ExceptionMessage);
+          this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
         } else if (response) {
           this.getAllCustomers();
           this.clear();
@@ -70,7 +70,7 @@ export class ManageCustomerComponent implements OnInit {
     } else {
       this.webApiService.Post<Customer>('Customer/AddCustomer', this._customer, (response, error) => {
         if (error) {
-          this.notifier.notify('error', error.error.ExceptionMessage);
+          this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
         } else if (response) {
           this.getAllCustomers();
           this.clear();
@@ -93,7 +93,7 @@ export class ManageCustomerComponent implements OnInit {
   deleteCustomer() {
     this.webApiService.Get<any>('Customer/DeleteCustomer/?id=' + this._selectedCustomer.ID, (response, error) => {
       if (error) {
-        this.notifier.notify('error', error.error.ExceptionMessage);
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else {
         this.getAllCustomers();
         this.clear();
