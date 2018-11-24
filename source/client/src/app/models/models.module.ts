@@ -21,6 +21,24 @@ export class Customer {
   Balance: number;
 }
 
+export class Invoice {
+  ID: number;
+  Date: Date;
+  FK_ID_Customer: number;
+  Discount: number;
+  Total: number;
+  Balance: number;
+  InvoiceItems: Array<InvoiceItem>;
+}
+
+export class InvoiceItem {
+  ID: number;
+  FK_ID_Fish: number;
+  Quantity: number;
+  Rate: number;
+  Amount: number;
+}
+
 export class WebApiError {
   Message: string;
   ExceptionMessage: string;

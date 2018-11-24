@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
-import { Subject, Observable, merge } from 'rxjs';
+import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 
 @Component({
@@ -9,10 +8,10 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
   styleUrls: ['./auto-complete-text-box.component.css']
 })
 export class AutoCompleteTextBoxComponent implements OnInit {
-  @Input() value: string;
   @Input() suggestions: Array<string> = new Array<string>();
   @Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
+  value: string;
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
@@ -28,6 +27,10 @@ export class AutoCompleteTextBoxComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public clear() {
+    this.value = '';
   }
 
 }
