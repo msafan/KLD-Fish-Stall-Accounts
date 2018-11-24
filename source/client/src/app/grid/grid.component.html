@@ -1,12 +1,12 @@
 <div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <th *ngFor="let column of _options.Columns">{{column.Title}}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of _rows">
+      <tr *ngFor="let row of _rows" (click)="selectedRowChanged(row)" [ngClass]="{'active' : row === _selectedRow}">
         <td *ngFor="let column of _options.Columns">{{row[column.Name]}}</td>
       </tr>
     </tbody>

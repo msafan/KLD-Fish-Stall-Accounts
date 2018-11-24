@@ -10,7 +10,7 @@ namespace KLDFishStallAccounts.WebApi.Attributes
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
             actionExecutedContext.Response = actionExecutedContext.Request.
-                CreateErrorResponse(HttpStatusCode.InternalServerError, 
+                CreateErrorResponse(HttpStatusCode.InternalServerError,
                 new HttpError(actionExecutedContext.Exception, true));
         }
     }

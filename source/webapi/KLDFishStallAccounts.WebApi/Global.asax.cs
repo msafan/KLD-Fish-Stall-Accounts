@@ -14,7 +14,7 @@ namespace KLDFishStallAccounts.WebApi
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        private readonly IWindsorContainer container;
+        private IWindsorContainer container;
 
         public WebApiApplication()
         {
@@ -22,34 +22,21 @@ namespace KLDFishStallAccounts.WebApi
                 new WindsorContainer().Install(new DependencyInstaller());
         }
 
+        public override void Dispose()
+        {
+            this.container.Dispose();
+            base.Dispose();
+        }
+
         protected void Application_Start()
         {
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
             GlobalConfiguration.Configuration.Services.Replace(
                typeof(IHttpControllerActivator),
                new WindsorActivator(this.container));
-
-            AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-        }
-
-        /// <summary>
-        /// Application_BeginRequest
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
-            if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
-            {
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
-                HttpContext.Current.Response.AddHeader("Access-Control-Max-Age", "1728000");
-                HttpContext.Current.Response.End();
-            }
         }
     }
 }

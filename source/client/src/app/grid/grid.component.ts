@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GridColumn, GridOptions } from '../models.service';
 
 @Component({
@@ -8,10 +8,11 @@ import { GridColumn, GridOptions } from '../models.service';
 })
 export class GridComponent implements OnInit {
   @Input('options') _options: GridOptions;
-  _rows: Array<any>;
+  @Output('rowSelectionChanged') rowSelectionChanged: EventEmitter<any> = new EventEmitter<any>();
+  _rows: Array<any> = new Array<any>();
+  _selectedRow: any = undefined;
 
   constructor() {
-    this._rows = new Array<any>();
   }
 
   ngOnInit() {
@@ -21,5 +22,10 @@ export class GridComponent implements OnInit {
     rows.forEach(row => {
       this._rows.push(row);
     });
+  }
+
+  selectedRowChanged(row) {
+    this._selectedRow = row;
+    this.rowSelectionChanged.emit(this._selectedRow);
   }
 }

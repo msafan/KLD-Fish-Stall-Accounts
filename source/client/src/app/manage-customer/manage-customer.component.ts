@@ -29,6 +29,9 @@ export class ManageCustomerComponent implements OnInit {
     let rows: Array<any> = new Array<any>();
     rows.push({ number: 1, firstName: 'Mohammed', lastName: 'Safan', email: 'mohammedsafan0@gmail.com' });
     rows.push({ number: 2, firstName: 'Safa', lastName: 'Mubashira', email: 'mubashirasafa@gmail.com' });
+    rows.push({ number: 3, firstName: 'Dilshad', lastName: 'Bashir', email: '4pm09cs050@gmail.com' });
+    rows.push({ number: 4, firstName: 'Bashir', lastName: 'Saheb', email: 'safangate@gmail.com' });
+    rows.push({ number: 5, firstName: 'Shahin', lastName: 'Mansoor', email: 'shahinmansoor0@gmail.com' });
     this._grid.addRows(rows);
   }
 
