@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,53 @@ import { NewCashVoucherComponent } from './new-cash-voucher/new-cash-voucher.com
 import { GridComponent } from './grid/grid.component';
 import { FooterComponent } from './footer/footer.component';
 import { AutoCompleteTextBoxComponent } from './auto-complete-text-box/auto-complete-text-box.component';
+import { LocalStorageModule } from 'angular-2-local-storage';
+import { HttpClientModule } from '@angular/common/http';
+
+/**
+ * Custom angular notifier options
+ */
+const customNotifierOptions: NotifierOptions = {
+  position: {
+		horizontal: {
+			position: 'right',
+			distance: 12
+		},
+		vertical: {
+			position: 'top',
+			distance: 12,
+			gap: 10
+		}
+	},
+  theme: 'material',
+  behaviour: {
+    autoHide: 5000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: true,
+    stacking: 4
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease'
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease'
+    },
+    overlap: 150
+  }
+};
+
 
 @NgModule({
   declarations: [
@@ -34,9 +82,15 @@ import { AutoCompleteTextBoxComponent } from './auto-complete-text-box/auto-comp
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    LocalStorageModule.withConfig({
+      prefix: 'KLDFishStallAccounts',
+      storageType: 'localStorage'
+    }),
+    NotifierModule.withConfig(customNotifierOptions)
   ],
   providers: [],
   bootstrap: [AppComponent]

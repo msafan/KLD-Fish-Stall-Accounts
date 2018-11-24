@@ -1,5 +1,6 @@
 <div *ngIf="!_isLoggedIn">
   <!-- Work Area -->
+  <notifier-container></notifier-container>
   <router-outlet></router-outlet>
 </div>
 
@@ -43,6 +44,8 @@
 
     <div id="content-wrapper">
       <div class="container-fluid">
+        <notifier-container></notifier-container>
+
         <!-- Work Area -->
         <router-outlet></router-outlet>
       </div>

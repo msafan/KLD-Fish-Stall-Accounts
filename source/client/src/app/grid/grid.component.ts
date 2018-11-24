@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { GridColumn, GridOptions } from '../models.service';
+import { GridColumn, GridOptions } from '../models/models.module';
+import { __core_private_testing_placeholder__ } from '@angular/core/testing';
 
 @Component({
   selector: 'app-grid',
@@ -22,6 +23,14 @@ export class GridComponent implements OnInit {
     rows.forEach(row => {
       this._rows.push(row);
     });
+  }
+
+  public clear() {
+    this._rows = [];
+  }
+
+  public clearSelection() {
+    this._selectedRow = undefined;
   }
 
   selectedRowChanged(row) {

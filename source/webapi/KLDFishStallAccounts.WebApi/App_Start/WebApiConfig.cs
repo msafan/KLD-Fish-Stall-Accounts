@@ -9,6 +9,7 @@ namespace KLDFishStallAccounts.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
         }
     }
 }

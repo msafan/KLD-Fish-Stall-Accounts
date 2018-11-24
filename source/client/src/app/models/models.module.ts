@@ -1,8 +1,38 @@
-import { Injectable } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-@Injectable({
-  providedIn: 'root'
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule
+  ]
 })
+
+export class Fish {
+  ID: number;
+  Name: string;
+}
+
+export class Customer {
+  ID: number;
+  Name: string;
+  Address: string;
+  PhoneNumber: string;
+  Balance: number;
+}
+
+export class WebApiError {
+  Message: string;
+  ExceptionMessage: string;
+  ExceptionType: string;
+  StackTrace: string
+}
+
+export class AuthenticatedUser {
+  Name: string;
+  UserID: string;
+  Token: string;
+}
 
 export class SaleItem {
   FishName: string;
