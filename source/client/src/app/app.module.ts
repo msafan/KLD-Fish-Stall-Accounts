@@ -19,6 +19,10 @@ import { FooterComponent } from './footer/footer.component';
 import { AutoCompleteTextBoxComponent } from './auto-complete-text-box/auto-complete-text-box.component';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { HttpClientModule } from '@angular/common/http';
+import { ListInvoiceComponent } from './list-invoice/list-invoice.component';
+import { ListCashVoucherComponent } from './list-cash-voucher/list-cash-voucher.component';
+import { ViewCustomerComponent } from './view-customer/view-customer.component';
+import { ViewInvoiceComponent } from './view-invoice/view-invoice.component';
 
 /**
  * Custom angular notifier options
@@ -78,7 +82,11 @@ const customNotifierOptions: NotifierOptions = {
     NewCashVoucherComponent,
     GridComponent,
     FooterComponent,
-    AutoCompleteTextBoxComponent
+    AutoCompleteTextBoxComponent,
+    ListInvoiceComponent,
+    ListCashVoucherComponent,
+    ViewCustomerComponent,
+    ViewInvoiceComponent
   ],
   imports: [
     BrowserModule,

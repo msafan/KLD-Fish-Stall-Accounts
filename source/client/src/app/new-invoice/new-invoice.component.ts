@@ -37,12 +37,18 @@ export class NewInvoiceComponent implements OnInit {
   @ViewChild(AutoCompleteTextBoxComponent) _customerTextBox: AutoCompleteTextBoxComponent;
 
   constructor(private webApiService: WebapiService, private notifier: NotifierService,
-    private router: Router) {
+    private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.getAllCustomers();
     this.getAllFishes();
+
+    this.route.params.subscribe(params => {
+      if (params.id) {
+        this.getInvoiceByID(params.id);
+      }
+    })
   }
 
   getInvoiceByID(ID: number) {
@@ -51,6 +57,7 @@ export class NewInvoiceComponent implements OnInit {
         this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
         this._invoice = response;
+        this._invoice.Date = new Date();
       }
     });
   }

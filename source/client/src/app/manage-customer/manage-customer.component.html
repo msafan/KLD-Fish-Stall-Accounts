@@ -39,11 +39,14 @@
       </div>
       <div class="card-body">
         <div class="row">
+            <div class="col-lg-2">
+              <button class="btn btn-primary btn-block" [disabled]="!_selectedCustomer" (click)="viewCustomer()"><i class="fa fa-eye fw"></i> Details</button>
+            </div>
           <div class="col-lg-2">
-            <button class="btn btn-warning btn-block" [disabled]="!_selectedCustomer" (click)="editCustomer()"><i class="fa fa-pencil"></i> Edit</button>
+            <button class="btn btn-warning btn-block" [disabled]="!_selectedCustomer" (click)="editCustomer()"><i class="fa fa-pencil fw"></i> Edit</button>
           </div>
           <div class="col-lg-2">
-            <button class="btn btn-danger btn-block" [disabled]="!_selectedCustomer" (click)="deleteCustomer()"><i class="fa fa-times"></i> Delete</button>
+            <button class="btn btn-danger btn-block" [disabled]="!_selectedCustomer" (click)="deleteCustomer()"><i class="fa fa-times fw"></i> Delete</button>
           </div>
         </div>
         <br />
