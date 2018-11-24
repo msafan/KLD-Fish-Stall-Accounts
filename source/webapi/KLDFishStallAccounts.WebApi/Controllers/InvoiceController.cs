@@ -1,10 +1,7 @@
-﻿using KLDFishStallAccounts.Model.EDMX;
+﻿using KLDFishStallAccounts.DTO.Invoice;
 using KLDFishStallAccounts.Service.Contracts;
 using KLDFishStallAccounts.WebApi.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace KLDFishStallAccounts.WebApi.Controllers
@@ -20,49 +17,61 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<Invoice> GetAllInvoices()
+        public List<InvoiceDTO> GetAllInvoices()
         {
-           return _invoiceService.GetAllInvoices();
+            return _invoiceService.GetAllInvoices();
         }
 
         [HttpGet]
-        public List<CashVoucher> GetAllCashVouchers()
+        public List<CashVoucherDTO> GetAllCashVouchers()
         {
             return _invoiceService.GetAllCashVouchers();
         }
 
         [HttpGet]
-        public List<Invoice> GetAllInvoicesByCustomerID([FromUri]int id)
+        public InvoiceDTO GetInvoiceByID([FromUri]int id)
+        {
+            return _invoiceService.GetInvoiceByID(id);
+        }
+
+        [HttpGet]
+        public CashVoucherDTO GetCashVoucherByID([FromUri]int id)
+        {
+            return _invoiceService.GetCashVoucherByID(id);
+        }
+
+        [HttpGet]
+        public List<InvoiceDTO> GetAllInvoicesByCustomerID([FromUri]int id)
         {
             return _invoiceService.GetAllInvoicesByCustomerID(id);
         }
 
         [HttpGet]
-        public List<CashVoucher> GetAllCashVoucherByCustomerID([FromUri]int id)
+        public List<CashVoucherDTO> GetAllCashVoucherByCustomerID([FromUri]int id)
         {
             return _invoiceService.GetAllCashVoucherByCustomerID(id);
         }
 
         [HttpPost]
-        public Invoice AddInvoice([FromBody]Invoice invoice)
+        public InvoiceDTO AddInvoice([FromBody]InvoiceDTO invoice)
         {
             return _invoiceService.AddInvoice(invoice);
         }
 
         [HttpPost]
-        public CashVoucher AddCashVoucher([FromBody]CashVoucher cashVoucher)
+        public CashVoucherDTO AddCashVoucher([FromBody]CashVoucherDTO cashVoucher)
         {
             return _invoiceService.AddCashVoucher(cashVoucher);
         }
 
         [HttpPost]
-        public Invoice EditInvoice([FromBody]Invoice invoice)
+        public InvoiceDTO EditInvoice([FromBody]InvoiceDTO invoice)
         {
             return _invoiceService.EditInvoice(invoice);
         }
 
         [HttpPost]
-        public CashVoucher EditCashVoucher([FromBody]CashVoucher cashVoucher)
+        public CashVoucherDTO EditCashVoucher([FromBody]CashVoucherDTO cashVoucher)
         {
             return _invoiceService.EditCashVoucher(cashVoucher);
         }

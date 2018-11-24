@@ -17,16 +17,17 @@ namespace KLDFishStallAccounts.Service.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public Customer AddCustomer(Customer customer)
+        public CustomerDTO AddCustomer(CustomerDTO customer)
         {
             var customerFromDB = _unitOfWork.Customer.Get(x => x.Name.ToLowerInvariant() == customer.Name.ToLowerInvariant());
             if (customerFromDB != null)
                 throw new Exception($"Customer {customer.Name} already exists");
 
-            _unitOfWork.Customer.Insert(customer);
+            var customerToInsert = customer.Map();
+            _unitOfWork.Customer.Insert(customerToInsert);
             _unitOfWork.Commit();
 
-            return customer;
+            return new CustomerDTO(customerToInsert);
         }
 
         public void DeleteCustomer(int id)
@@ -43,7 +44,7 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.Commit();
         }
 
-        public Customer EditCustomer(Customer customer)
+        public CustomerDTO EditCustomer(CustomerDTO customer)
         {
             var customerToUpdate = _unitOfWork.Customer.Get(x => x.ID == customer.ID);
             if (customerToUpdate == null)
@@ -63,21 +64,21 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.Customer.Update(customerToUpdate);
             _unitOfWork.Commit();
 
-            return customerToUpdate;
+            return new CustomerDTO(customerToUpdate);
         }
 
-        public List<Customer> GetAllCustomers()
+        public List<CustomerDTO> GetAllCustomers()
         {
-            return _unitOfWork.Customer.GetAll().ToList();
+            return _unitOfWork.Customer.GetAll().Select(x => new CustomerDTO(x)).ToList();
         }
 
-        public Customer GetCustomerByID(int id)
+        public CustomerDTO GetCustomerByID(int id)
         {
             var customer = _unitOfWork.Customer.Get(x => x.ID == id);
             if (customer == null)
                 throw new Exception("Could not find the customer");
 
-            return customer;
+            return new CustomerDTO(customer);
         }
 
         public List<CustomerStatement> GetCustomerStatement(int id, DateRange dateRange)
@@ -96,7 +97,7 @@ namespace KLDFishStallAccounts.Service.Services
                     Amount = x.Total,
                     Date = x.Date,
                     ID = x.ID,
-                    Particulars = "Sales Invoice"
+                    Particulars = "Sales InvoiceDTO"
                 });
 
             customerStatements.Concat(_unitOfWork.CashVoucher.
@@ -125,7 +126,7 @@ namespace KLDFishStallAccounts.Service.Services
             customerStatementsToReturn.ForEach(x =>
             {
                 x.Balance = currentBalance;
-                currentBalance += (x.Amount * (x.Particulars == "Sales Invoice" ? -1 : 1));
+                currentBalance += (x.Amount * (x.Particulars == "Sales InvoiceDTO" ? -1 : 1));
             });
 
             customerStatementsToReturn.Reverse();

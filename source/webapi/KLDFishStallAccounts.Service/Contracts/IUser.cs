@@ -1,21 +1,17 @@
-﻿using KLDFishStallAccounts.Model.EDMX;
-using System;
+﻿using KLDFishStallAccounts.DTO.User;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KLDFishStallAccounts.Service.Contracts
 {
     public interface IUser
     {
-        List<User> GetAllUsers();
-        User GetuserByID(int id);
-        User GetUserByUserID(string userID);
-        User AddUser(User user);
-        User EditUser(User user);
+        List<UserDTO> GetAllUsers();
+        UserDTO GetuserByID(int id);
+        UserDTO GetUserByUserID(string userID);
+        UserDTO AddUser(UserDTO user);
+        UserDTO EditUser(UserDTO user);
         void DeleteUser(int id);
-        User Login(User user);
-        void ChangeUserPassword(KLDFishStallAccounts.DTO.User.ChangeUserPassword user);
+        UserDTO Login(UserDTO user);
+        void ChangeUserPassword(ChangeUserPassword user);
     }
 }

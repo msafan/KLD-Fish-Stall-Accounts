@@ -1,5 +1,5 @@
-﻿using KLDFishStallAccounts.Model;
-using KLDFishStallAccounts.Model.EDMX;
+﻿using KLDFishStallAccounts.DTO.Invoice;
+using KLDFishStallAccounts.Model;
 using KLDFishStallAccounts.Service.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public CashVoucher AddCashVoucher(CashVoucher cashVoucher)
+        public CashVoucherDTO AddCashVoucher(CashVoucherDTO cashVoucher)
         {
             var customer = _unitOfWork.Customer.Get(x => x.ID == cashVoucher.FK_ID_Customer);
             if (customer == null)
@@ -24,14 +24,15 @@ namespace KLDFishStallAccounts.Service.Services
 
             customer.Balance -= cashVoucher.Amount;
 
+            var cashVoucherToInsert = cashVoucher.Map();
             _unitOfWork.Customer.Update(customer);
-            _unitOfWork.CashVoucher.Insert(cashVoucher);
+            _unitOfWork.CashVoucher.Insert(cashVoucherToInsert);
             _unitOfWork.Commit();
 
-            return cashVoucher;
+            return new CashVoucherDTO(cashVoucherToInsert);
         }
 
-        public Invoice AddInvoice(Invoice invoice)
+        public InvoiceDTO AddInvoice(InvoiceDTO invoice)
         {
             var customer = _unitOfWork.Customer.Get(x => x.ID == invoice.FK_ID_Customer);
             if (customer == null)
@@ -39,11 +40,12 @@ namespace KLDFishStallAccounts.Service.Services
 
             customer.Balance += invoice.Total;
 
+            var invoiceToInsert = invoice.Map();
             _unitOfWork.Customer.Update(customer);
-            _unitOfWork.Invoice.Insert(invoice);
+            _unitOfWork.Invoice.Insert(invoiceToInsert);
             _unitOfWork.Commit();
 
-            return invoice;
+            return new InvoiceDTO(invoiceToInsert);
         }
 
         public void DeleteCashVoucher(int id)
@@ -78,7 +80,7 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.Commit();
         }
 
-        public CashVoucher EditCashVoucher(CashVoucher cashVoucher)
+        public CashVoucherDTO EditCashVoucher(CashVoucherDTO cashVoucher)
         {
             var cashVoucherFromDB = _unitOfWork.CashVoucher.Get(x => x.ID == cashVoucher.ID);
             if (cashVoucherFromDB == null)
@@ -108,10 +110,10 @@ namespace KLDFishStallAccounts.Service.Services
 
             _unitOfWork.Commit();
 
-            return cashVoucherFromDB;
+            return new CashVoucherDTO(cashVoucherFromDB);
         }
 
-        public Invoice EditInvoice(Invoice invoice)
+        public InvoiceDTO EditInvoice(InvoiceDTO invoice)
         {
             var invoiceFromDB = _unitOfWork.Invoice.Get(x => x.ID == invoice.ID);
             if (invoiceFromDB == null)
@@ -135,10 +137,10 @@ namespace KLDFishStallAccounts.Service.Services
             invoiceFromDB.Balance = invoice.Balance;
             invoiceFromDB.Discount = invoice.Discount;
             _unitOfWork.Invoice.Update(invoiceFromDB);
-            
+
             _unitOfWork.InvoiceItem.Delete(x => x.ID == invoiceFromDB.ID);
 
-            var invoiceItems = invoice.InvoiceItems.ToList();
+            var invoiceItems = invoice.InvoiceItems.Select(x => x.Map()).ToList();
             invoiceItems.ForEach(x => x.FK_ID_Invoice = invoiceFromDB.ID);
             _unitOfWork.InvoiceItem.InsertAll(invoiceItems);
 
@@ -148,35 +150,53 @@ namespace KLDFishStallAccounts.Service.Services
 
             _unitOfWork.Commit();
 
-            return invoiceFromDB;
+            return new InvoiceDTO(invoiceFromDB);
         }
 
-        public List<CashVoucher> GetAllCashVoucherByCustomerID(int id)
+        public List<CashVoucherDTO> GetAllCashVoucherByCustomerID(int id)
         {
             var customer = _unitOfWork.Customer.Get(x => x.ID == id);
             if (customer == null)
                 throw new Exception("Could not find the customer");
 
-            return _unitOfWork.CashVoucher.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
+            return _unitOfWork.CashVoucher.GetAllQueryable().Where(x => x.FK_ID_Customer == id).Select(x => new CashVoucherDTO(x)).ToList();
         }
 
-        public List<CashVoucher> GetAllCashVouchers()
+        public List<CashVoucherDTO> GetAllCashVouchers()
         {
-            return _unitOfWork.CashVoucher.GetAll().ToList();
+            return _unitOfWork.CashVoucher.GetAll().Select(x => new CashVoucherDTO(x)).ToList();
         }
 
-        public List<Invoice> GetAllInvoices()
+        public List<InvoiceDTO> GetAllInvoices()
         {
-            return _unitOfWork.Invoice.GetAll().ToList();
+            return _unitOfWork.Invoice.GetAll().Select(x => new InvoiceDTO(x)).ToList();
         }
 
-        public List<Invoice> GetAllInvoicesByCustomerID(int id)
+        public List<InvoiceDTO> GetAllInvoicesByCustomerID(int id)
         {
             var customer = _unitOfWork.Customer.Get(x => x.ID == id);
             if (customer == null)
                 throw new Exception("Could not find the customer");
 
-            return _unitOfWork.Invoice.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
+            return _unitOfWork.Invoice.GetAllQueryable().Where(x => x.FK_ID_Customer == id).Select(x => new InvoiceDTO(x)).ToList();
+        }
+
+        public CashVoucherDTO GetCashVoucherByID(int id)
+        {
+            var cashVoucher = _unitOfWork.CashVoucher.Get(x => x.ID == id);
+            if (cashVoucher == null)
+                throw new Exception("Could not find the cash voucher");
+
+            return new CashVoucherDTO(cashVoucher);
+        }
+
+        public InvoiceDTO GetInvoiceByID(int id)
+        {
+            var invoice = _unitOfWork.Invoice.Get(x => x.ID == id);
+            if (invoice == null)
+                throw new Exception("Could not find the invoice");
+
+            return new InvoiceDTO(invoice);
         }
     }
 }

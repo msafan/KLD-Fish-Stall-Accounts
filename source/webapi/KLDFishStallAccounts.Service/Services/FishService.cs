@@ -1,5 +1,5 @@
-﻿using KLDFishStallAccounts.Model;
-using KLDFishStallAccounts.Model.EDMX;
+﻿using KLDFishStallAccounts.DTO.Fish;
+using KLDFishStallAccounts.Model;
 using KLDFishStallAccounts.Service.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,16 +16,18 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Fish AddFish(Fish fish)
+        public FishDTO AddFish(FishDTO fish)
         {
             var fishFromDB = _unitOfWork.Fish.Get(x => x.Name.ToLowerInvariant() == fish.Name.ToLowerInvariant());
             if (fishFromDB != null)
                 throw new Exception($"Fish {fish.Name} already exists");
 
-            _unitOfWork.Fish.Insert(fish);
+            var fishToInsert = fish.Map();
+
+            _unitOfWork.Fish.Insert(fishToInsert);
             _unitOfWork.Commit();
 
-            return fish;
+            return new FishDTO(fishToInsert);
         }
 
         public void DeleteFish(int id)
@@ -38,7 +40,7 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.Commit();
         }
 
-        public Fish EditFish(Fish fish)
+        public FishDTO EditFish(FishDTO fish)
         {
             var fishToUpdate = _unitOfWork.Fish.Get(x => x.ID == fish.ID);
             if (fishToUpdate == null)
@@ -56,12 +58,12 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.Fish.Update(fishToUpdate);
             _unitOfWork.Commit();
 
-            return fishToUpdate;
+            return new FishDTO(fishToUpdate);
         }
 
-        public List<Fish> GetAllFishes()
+        public List<FishDTO> GetAllFishes()
         {
-            return _unitOfWork.Fish.GetAll().ToList();
+            return _unitOfWork.Fish.GetAll().Select(x => new FishDTO(x)).ToList();
         }
     }
 }

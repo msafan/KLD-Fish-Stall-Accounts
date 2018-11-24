@@ -41,9 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DateRange.cs" />
+    <Compile Include="Customer\CustomerDTO.cs" />
     <Compile Include="Customer\CustomerStatement.cs" />
+    <Compile Include="DataTransferObject.cs" />
+    <Compile Include="Fish\FishDTO.cs" />
+    <Compile Include="IDataTransferObjectConvertible.cs" />
+    <Compile Include="Invoice\CashVoucherDTO.cs" />
+    <Compile Include="Invoice\InvoiceDTO.cs" />
+    <Compile Include="Invoice\InvoiceItemDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\ChangeUserPassword.cs" />
+    <Compile Include="User\UserDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KLDFishStallAccounts.Model\KLDFishStallAccounts.Model.csproj">

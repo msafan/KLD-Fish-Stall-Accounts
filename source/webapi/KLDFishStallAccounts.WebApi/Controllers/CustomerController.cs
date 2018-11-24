@@ -1,6 +1,5 @@
 ﻿using KLDFishStallAccounts.DTO.Common;
 using KLDFishStallAccounts.DTO.Customer;
-using KLDFishStallAccounts.Model.EDMX;
 using KLDFishStallAccounts.Service.Contracts;
 using KLDFishStallAccounts.WebApi.Attributes;
 using System.Collections.Generic;
@@ -19,25 +18,25 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<Customer> GetAllCustomers()
+        public List<CustomerDTO> GetAllCustomers()
         {
             return _customerService.GetAllCustomers();
         }
 
         [HttpGet]
-        public Customer GetCustomerByID([FromUri] int id)
+        public CustomerDTO GetCustomerByID([FromUri] int id)
         {
             return _customerService.GetCustomerByID(id);
         }
 
         [HttpPost]
-        public Customer AddCustomer([FromBody]Customer customer)
+        public CustomerDTO AddCustomer([FromBody]CustomerDTO customer)
         {
             return _customerService.AddCustomer(customer);
         }
 
         [HttpPost]
-        public Customer EditCustomer([FromBody] Customer customer)
+        public CustomerDTO EditCustomer([FromBody] CustomerDTO customer)
         {
             return _customerService.EditCustomer(customer);
         }

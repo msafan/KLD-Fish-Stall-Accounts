@@ -1,6 +1,5 @@
 ﻿using KLDFishStallAccounts.DTO.User;
 using KLDFishStallAccounts.Model;
-using KLDFishStallAccounts.Model.EDMX;
 using KLDFishStallAccounts.Service.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,7 +16,7 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork = unitOfWork;
         }
 
-        public User AddUser(User user)
+        public UserDTO AddUser(UserDTO user)
         {
             var userFromDB = _unitOfWork.User.Get(x => user.UserID.ToLowerInvariant() == user.UserID.ToLowerInvariant());
             if (userFromDB != null)
@@ -25,10 +24,11 @@ namespace KLDFishStallAccounts.Service.Services
 
             user.Password = AESEncryption.Encrypt(user.Password);
 
-            _unitOfWork.User.Insert(user);
+            var userToInsert = user.Map();
+            _unitOfWork.User.Insert(userToInsert);
             _unitOfWork.Commit();
 
-            return user;
+            return new UserDTO(userToInsert);
         }
 
         public void ChangeUserPassword(ChangeUserPassword user)
@@ -49,7 +49,7 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.Commit();
         }
 
-        public User EditUser(User user)
+        public UserDTO EditUser(UserDTO user)
         {
             var userToUpdate = _unitOfWork.User.Get(x => x.ID == user.ID);
             if (userToUpdate == null)
@@ -73,15 +73,15 @@ namespace KLDFishStallAccounts.Service.Services
             _unitOfWork.User.Update(userToUpdate);
             _unitOfWork.Commit();
 
-            return userToUpdate;
+            return new UserDTO(userToUpdate);
         }
 
-        public List<User> GetAllUsers()
+        public List<UserDTO> GetAllUsers()
         {
-            return _unitOfWork.User.GetAll().Select(x => { x.Password = string.Empty; return x; }).ToList();
+            return _unitOfWork.User.GetAll().Select(x => { x.Password = string.Empty; return new UserDTO(x); }).ToList();
         }
 
-        public User GetuserByID(int id)
+        public UserDTO GetuserByID(int id)
         {
             var user = _unitOfWork.User.Get(x => x.ID == id);
             if (user == null)
@@ -89,10 +89,10 @@ namespace KLDFishStallAccounts.Service.Services
 
             user.Password = string.Empty;
 
-            return user;
+            return new UserDTO(user);
         }
 
-        public User GetUserByUserID(string userID)
+        public UserDTO GetUserByUserID(string userID)
         {
             var user = _unitOfWork.User.Get(x => x.UserID.ToLowerInvariant() == userID.ToLowerInvariant());
             if (user == null)
@@ -100,10 +100,10 @@ namespace KLDFishStallAccounts.Service.Services
 
             user.Password = string.Empty;
 
-            return user;
+            return new UserDTO(user);
         }
 
-        public User Login(User user)
+        public UserDTO Login(UserDTO user)
         {
             var userFromDB = _unitOfWork.User.
                 Get(x => x.UserID.ToLowerInvariant() == user.UserID.ToLowerInvariant() &&
@@ -113,7 +113,7 @@ namespace KLDFishStallAccounts.Service.Services
 
             userFromDB.Password = string.Empty;
 
-            return userFromDB;
+            return new UserDTO(userFromDB);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using KLDFishStallAccounts.Model.EDMX;
+﻿using KLDFishStallAccounts.DTO.Fish;
 using KLDFishStallAccounts.Service.Contracts;
 using KLDFishStallAccounts.WebApi.Attributes;
 using System.Collections.Generic;
@@ -17,19 +17,19 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<Fish> GetAllFishes()
+        public List<FishDTO> GetAllFishes()
         {
             return _fishService.GetAllFishes();
         }
 
         [HttpPost]
-        public Fish AddFish([FromBody]Fish fish)
+        public FishDTO AddFish([FromBody]FishDTO fish)
         {
             return _fishService.AddFish(fish);
         }
 
         [HttpPost]
-        public Fish EditFish([FromBody] Fish fish)
+        public FishDTO EditFish([FromBody] FishDTO fish)
         {
             return _fishService.EditFish(fish);
         }

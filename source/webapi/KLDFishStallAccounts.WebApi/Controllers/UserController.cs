@@ -18,31 +18,31 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<User> GetAllUsers()
+        public List<UserDTO> GetAllUsers()
         {
             return _userService.GetAllUsers();
         }
 
         [HttpGet]
-        public User GetUserByID([FromUri]int id)
+        public UserDTO GetUserByID([FromUri]int id)
         {
             return _userService.GetuserByID(id);
         }
 
         [HttpGet]
-        public User GetUserByUserID([FromUri]string userID)
+        public UserDTO GetUserByUserID([FromUri]string userID)
         {
             return _userService.GetUserByUserID(userID);
         }
 
         [HttpPost]
-        public User AddUser([FromBody]User user)
+        public UserDTO AddUser([FromBody]UserDTO user)
         {
             return _userService.AddUser(user);
         }
 
         [HttpPost]
-        public User EditUser([FromBody]User user)
+        public UserDTO EditUser([FromBody]UserDTO user)
         {
             return _userService.EditUser(user);
         }
@@ -54,7 +54,7 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpPost]
-        public User Login([FromBody]User user)
+        public UserDTO Login([FromBody]UserDTO user)
         {
             return _userService.Login(user);
         }
