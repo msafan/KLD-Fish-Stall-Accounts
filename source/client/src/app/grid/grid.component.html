@@ -8,7 +8,7 @@
     <tbody>
       <tr *ngFor="let row of _rows" (click)="selectedRowChanged(row)" [ngClass]="{'active' : row === _selectedRow}">
         <td *ngFor="let column of _options.Columns">
-          <span *ngIf="column.Type === 'date'">{{row[column.Name] | date}}</span>
+          <span *ngIf="column.Type === 'date'">{{(row[column.Name] | date) === 'Jan 1, 1' ? '' : row[column.Name] | date}}</span>
           <span *ngIf="column.Type !== 'date'">{{row[column.Name]}}</span>
         </td>
       </tr>

@@ -159,7 +159,8 @@ namespace KLDFishStallAccounts.Service.Services
             if (customer == null)
                 throw new Exception("Could not find the customer");
 
-            return _unitOfWork.CashVoucher.GetAllQueryable().Where(x => x.FK_ID_Customer == id).Select(x => new CashVoucherDTO(x)).ToList();
+            var cashVouchers = _unitOfWork.CashVoucher.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
+            return cashVouchers.Select(x => new CashVoucherDTO(x)).ToList();
         }
 
         public List<CashVoucherDTO> GetAllCashVouchers()
@@ -178,7 +179,8 @@ namespace KLDFishStallAccounts.Service.Services
             if (customer == null)
                 throw new Exception("Could not find the customer");
 
-            return _unitOfWork.Invoice.GetAllQueryable().Where(x => x.FK_ID_Customer == id).Select(x => new InvoiceDTO(x)).ToList();
+            var invoices = _unitOfWork.Invoice.GetAllQueryable().Where(x => x.FK_ID_Customer == id).ToList();
+            return invoices.Select(x => new InvoiceDTO(x)).ToList();
         }
 
         public CashVoucherDTO GetCashVoucherByID(int id)

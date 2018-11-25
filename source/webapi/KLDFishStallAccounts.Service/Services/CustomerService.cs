@@ -87,7 +87,12 @@ namespace KLDFishStallAccounts.Service.Services
             if (customer == null)
                 throw new Exception("Could not find the customer");
 
-            var customerStatements = _unitOfWork.Invoice.
+            if (dateRange == null)
+                dateRange = new DateRange() { StartDate = new DateTime(1, 1, 1), EndDate = new DateTime(5000, 12, 31) };
+
+            var customerStatements = new List<CustomerStatement>();
+
+            customerStatements.AddRange(_unitOfWork.Invoice.
                 GetAllQueryable().
                 Where(x => x.FK_ID_Customer == id &&
                     x.Date >= dateRange.StartDate &&
@@ -98,13 +103,13 @@ namespace KLDFishStallAccounts.Service.Services
                     Date = x.Date,
                     ID = x.ID,
                     Particulars = "Sales InvoiceDTO"
-                });
+                }));
 
-            customerStatements.Concat(_unitOfWork.CashVoucher.
+            customerStatements.AddRange(_unitOfWork.CashVoucher.
                 GetAllQueryable().
                 Where(x => x.FK_ID_Customer == id &&
-                   x.Date >= dateRange.StartDate &&
-                   x.Date <= dateRange.EndDate).
+                    x.Date >= dateRange.StartDate &&
+                    x.Date <= dateRange.EndDate).
                 Select(x => new CustomerStatement()
                 {
                     Amount = x.Amount,

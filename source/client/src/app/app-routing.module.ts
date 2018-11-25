@@ -4,12 +4,13 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ManageCustomerComponent } from './manage-customer/manage-customer.component';
 import { ManageFishComponent } from './manage-fish/manage-fish.component';
-import { NewCashVoucherComponent } from './new-cash-voucher/new-cash-voucher.component';
 import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
 import { ListInvoiceComponent } from './list-invoice/list-invoice.component';
-import { ListCashVoucherComponent } from './list-cash-voucher/list-cash-voucher.component';
 import { ViewInvoiceComponent } from './view-invoice/view-invoice.component';
 import { ViewCustomerComponent } from './view-customer/view-customer.component';
+import { LogoutComponent } from './logout/logout.component';
+import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
+import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -19,12 +20,12 @@ const routes: Routes = [
   { path: 'manage-fish', component: ManageFishComponent },
   { path: 'new-invoice', component: NewInvoiceComponent },
   { path: 'new-invoice/:id', component: NewInvoiceComponent },
-  { path: 'new-cash-voucher', component: NewCashVoucherComponent },
-  { path: 'new-cash-voucher/:id', component: NewCashVoucherComponent },
+  { path: 'cash-voucher', component: CashVoucherComponent },
   { path: 'list-invoice', component: ListInvoiceComponent },
-  { path: 'list-cash-voucher', component: ListCashVoucherComponent },
   { path: 'view-invoice/:id', component: ViewInvoiceComponent },
-  { path: 'view-customer/:id', component: ViewCustomerComponent }
+  { path: 'view-customer/:id', component: ViewCustomerComponent },
+  { path: 'view-cash-voucher/:id', component: ViewCashVoucherComponent },
+  { path: 'logout', component: LogoutComponent }
 ];
 
 @NgModule({

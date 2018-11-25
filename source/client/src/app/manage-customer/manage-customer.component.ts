@@ -3,13 +3,16 @@ import { GridComponent } from '../grid/grid.component';
 import { GridColumn, NumberFilter, TextFilter, GridOptions, Customer } from '../models/models.module';
 import { WebapiService } from '../webapi.service';
 import { NotifierService } from 'angular-notifier';
+import { Router } from '@angular/router';
+import { BaseComponentModule } from '../base-component/base-component.module';
+import { SharedModelService } from '../shared-model.service';
 
 @Component({
   selector: 'app-manage-customer',
   templateUrl: './manage-customer.component.html',
   styleUrls: ['./manage-customer.component.css']
 })
-export class ManageCustomerComponent implements OnInit {
+export class ManageCustomerComponent extends BaseComponentModule {
   @ViewChild(GridComponent) _grid: GridComponent;
   _customer: Customer = { ID: -1, Address: '', Name: '', PhoneNumber: '', Balance: 0 };
   _selectedCustomer: Customer = undefined;
@@ -27,10 +30,12 @@ export class ManageCustomerComponent implements OnInit {
     PageSize: 20
   };
 
-  constructor(private webApiService: WebapiService, private notifier: NotifierService) {
+  constructor(private webApiService: WebapiService, private notifier: NotifierService, router: Router, sharedModel: SharedModelService) {
+    super(router, sharedModel);
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.getAllCustomers();
   }
 
@@ -138,6 +143,10 @@ export class ManageCustomerComponent implements OnInit {
       return true;
 
     return this._customer.PhoneNumber;
+  }
+
+  viewCustomer() {
+    this.router.navigate(['/view-customer', this._selectedCustomer.ID]);
   }
 
 }

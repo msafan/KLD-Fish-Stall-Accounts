@@ -5,6 +5,8 @@ import { WebapiService } from '../webapi.service';
 import { NotifierService } from 'angular-notifier';
 import { AutoCompleteTextBoxComponent } from '../auto-complete-text-box/auto-complete-text-box.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BaseComponentModule } from '../base-component/base-component.module';
+import { SharedModelService } from '../shared-model.service';
 
 @Component({
   selector: 'app-new-invoice',
@@ -13,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 
-export class NewInvoiceComponent implements OnInit {
+export class NewInvoiceComponent extends BaseComponentModule {
   _invoice: Invoice = {
     ID: -1,
     Balance: 0,
@@ -37,10 +39,12 @@ export class NewInvoiceComponent implements OnInit {
   @ViewChild(AutoCompleteTextBoxComponent) _customerTextBox: AutoCompleteTextBoxComponent;
 
   constructor(private webApiService: WebapiService, private notifier: NotifierService,
-    private router: Router, private route: ActivatedRoute) {
+    router: Router, sharedModel: SharedModelService, private route: ActivatedRoute) {
+    super(router, sharedModel);
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.getAllCustomers();
     this.getAllFishes();
 

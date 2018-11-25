@@ -5,13 +5,15 @@ import { WebapiService } from '../webapi.service';
 import { NotifierService } from 'angular-notifier';
 import { GridComponent } from '../grid/grid.component';
 import { CommonService } from '../common.service';
+import { BaseComponentModule } from '../base-component/base-component.module';
+import { SharedModelService } from '../shared-model.service';
 
 @Component({
   selector: 'app-list-invoice',
   templateUrl: './list-invoice.component.html',
   styleUrls: ['./list-invoice.component.css']
 })
-export class ListInvoiceComponent implements OnInit {
+export class ListInvoiceComponent extends BaseComponentModule {
   @ViewChild(GridComponent) _grid: GridComponent;
   _selectedInvoice: Invoice = undefined;
   _gridOptions: GridOptions = {
@@ -26,10 +28,13 @@ export class ListInvoiceComponent implements OnInit {
     PageSize: 20
   };
 
-  constructor(private router: Router, private webApiService: WebapiService,
-    private notifier: NotifierService, private commonServices: CommonService) { }
+  constructor(router: Router, sharedModel: SharedModelService, private webApiService: WebapiService,
+    private notifier: NotifierService, private commonServices: CommonService) {
+    super(router, sharedModel);
+  }
 
   ngOnInit() {
+    super.ngOnInit();
     this.getAllInvoices();
   }
 

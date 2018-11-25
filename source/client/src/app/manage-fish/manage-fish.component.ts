@@ -3,13 +3,16 @@ import { GridComponent } from '../grid/grid.component';
 import { GridOptions, GridColumn, TextFilter, NumberFilter, Fish } from '../models/models.module';
 import { WebapiService } from '../webapi.service';
 import { NotifierService } from 'angular-notifier';
+import { BaseComponentModule } from '../base-component/base-component.module';
+import { Router } from '@angular/router';
+import { SharedModelService } from '../shared-model.service';
 
 @Component({
   selector: 'app-manage-fish',
   templateUrl: './manage-fish.component.html',
   styleUrls: ['./manage-fish.component.css']
 })
-export class ManageFishComponent implements OnInit {
+export class ManageFishComponent extends BaseComponentModule {
   @ViewChild(GridComponent) _grid: GridComponent;
 
   _fish: Fish = { ID: -1, Name: '' };
@@ -25,10 +28,12 @@ export class ManageFishComponent implements OnInit {
     PageSize: 20
   };
 
-  constructor(private webApiService: WebapiService, private notifier: NotifierService) {
+  constructor(private webApiService: WebapiService, private notifier: NotifierService, router: Router, sharedModel: SharedModelService) {
+    super(router, sharedModel);
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.getAllFishes();
   }
 

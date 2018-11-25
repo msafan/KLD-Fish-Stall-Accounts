@@ -21,6 +21,14 @@ export class Customer {
   Balance: number;
 }
 
+export class CashVoucher {
+  ID: number;
+  FK_ID_Customer: number;
+  Date: Date;
+  Amount: number;
+  Remarks: string;
+}
+
 export class Invoice {
   ID: number;
   Date: Date;
@@ -39,11 +47,31 @@ export class InvoiceItem {
   Total: number;
 }
 
+export class DateRange {
+  StartDate: Date;
+  EndDate: Date;
+}
+
 export class WebApiError {
   Message: string;
   ExceptionMessage: string;
   ExceptionType: string;
   StackTrace: string
+}
+
+export class CustomerStatement {
+  Date: Date;
+  Particulars: string;
+  ID: number;
+  Amount: number;
+  Balance: number;
+}
+
+export class User {
+  ID: number;
+  Name: string;
+  UserID: string;
+  Password: string;
 }
 
 export class AuthenticatedUser {

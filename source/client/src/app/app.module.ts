@@ -7,22 +7,22 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ManageCustomerComponent } from './manage-customer/manage-customer.component';
 import { ManageFishComponent } from './manage-fish/manage-fish.component';
 import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
-import { NewCashVoucherComponent } from './new-cash-voucher/new-cash-voucher.component';
 import { GridComponent } from './grid/grid.component';
 import { FooterComponent } from './footer/footer.component';
 import { AutoCompleteTextBoxComponent } from './auto-complete-text-box/auto-complete-text-box.component';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { HttpClientModule } from '@angular/common/http';
 import { ListInvoiceComponent } from './list-invoice/list-invoice.component';
-import { ListCashVoucherComponent } from './list-cash-voucher/list-cash-voucher.component';
 import { ViewCustomerComponent } from './view-customer/view-customer.component';
 import { ViewInvoiceComponent } from './view-invoice/view-invoice.component';
+import { LogoutComponent } from './logout/logout.component';
+import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
+import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
 
 /**
  * Custom angular notifier options
@@ -73,20 +73,20 @@ const customNotifierOptions: NotifierOptions = {
   declarations: [
     AppComponent,
     HeaderComponent,
-    NavMenuComponent,
     LoginComponent,
     HomeComponent,
     ManageCustomerComponent,
     ManageFishComponent,
     NewInvoiceComponent,
-    NewCashVoucherComponent,
     GridComponent,
     FooterComponent,
     AutoCompleteTextBoxComponent,
     ListInvoiceComponent,
-    ListCashVoucherComponent,
     ViewCustomerComponent,
-    ViewInvoiceComponent
+    ViewInvoiceComponent,
+    LogoutComponent,
+    CashVoucherComponent,
+    ViewCashVoucherComponent
   ],
   imports: [
     BrowserModule,

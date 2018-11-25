@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListCashVoucherComponent } from './list-cash-voucher.component';
+import { ViewCashVoucherComponent } from './view-cash-voucher.component';
 
-describe('ListCashVoucherComponent', () => {
-  let component: ListCashVoucherComponent;
-  let fixture: ComponentFixture<ListCashVoucherComponent>;
+describe('ViewCashVoucherComponent', () => {
+  let component: ViewCashVoucherComponent;
+  let fixture: ComponentFixture<ViewCashVoucherComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListCashVoucherComponent ]
+      declarations: [ ViewCashVoucherComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListCashVoucherComponent);
+    fixture = TestBed.createComponent(ViewCashVoucherComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

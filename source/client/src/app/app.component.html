@@ -1,10 +1,10 @@
-<div *ngIf="!_isLoggedIn">
+<div *ngIf="!sharedModel.User">
   <!-- Work Area -->
   <notifier-container></notifier-container>
   <router-outlet></router-outlet>
 </div>
 
-<div *ngIf="_isLoggedIn">
+<div *ngIf="sharedModel.User">
   <!-- Header -->
   <app-header></app-header>
 
@@ -24,6 +24,17 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope-o fa-fw"></i> Invice</a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" [routerLink]='["/new-invoice"]'><i class="fa fa-plus fa-fw"></i> New Invoice</a>
+          <a class="dropdown-item" [routerLink]='["/list-invoice"]'><i class="fa fa-th-list fa-fw"></i> List Invoices</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]='["/cash-voucher"]'><i class="fa fa-dollar fa-fw"></i> Cash Voucher</a>
+      </li>
+      <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false"> <i class="fa fa-plus fa-fw"></i> New </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" [routerLink]='["/new-invoice"]'><i class="fa fa-envelope-o fa-fw"></i> Invoice</a>
@@ -39,7 +50,7 @@
           <a class="dropdown-item" [routerLink]='["/list-cash-voucher"]'><i class="fa fa-dollar fa-fw"></i> Cash
             Voucher</a>
         </div>
-      </li>
+      </li> -->
     </ul>
 
     <div id="content-wrapper">

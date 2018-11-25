@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SharedModelService } from './shared-model.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'KLD-Fish-Stall-Accounts';
 
-  public _isLoggedIn: boolean;
-
-  constructor() {
-    this._isLoggedIn = true;
+  constructor(private sharedModel: SharedModelService) {
   }
 }

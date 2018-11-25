@@ -23,7 +23,7 @@ namespace KLDFishStallAccounts.DTO.Invoice
 
         public int ID { get; set; }
         public int FK_ID_Customer { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
         public double Discount { get; set; }
         public double Total { get; set; }
         public double Balance { get; set; }

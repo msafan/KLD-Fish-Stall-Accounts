@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { SharedModelService } from '../shared-model.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-view-cash-voucher',
+  templateUrl: './view-cash-voucher.component.html',
+  styleUrls: ['./view-cash-voucher.component.css']
 })
-export class HomeComponent extends BaseComponentModule {
+export class ViewCashVoucherComponent extends BaseComponentModule {
 
   constructor(router: Router, sharedModel: SharedModelService) {
     super(router, sharedModel);

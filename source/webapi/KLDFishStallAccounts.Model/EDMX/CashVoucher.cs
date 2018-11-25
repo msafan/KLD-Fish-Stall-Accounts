@@ -16,7 +16,7 @@ namespace KLDFishStallAccounts.Model.EDMX
     {
         public int ID { get; set; }
         public int FK_ID_Customer { get; set; }
-        public System.DateTimeOffset Date { get; set; }
+        public System.DateTime Date { get; set; }
         public double Amount { get; set; }
         public string Remarks { get; set; }
     

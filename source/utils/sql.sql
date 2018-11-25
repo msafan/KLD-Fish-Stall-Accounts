@@ -43,7 +43,7 @@ create table [dbo].[CashVoucher]
 (
 	[ID] [int] identity(1,1) not null,
 	[FK_ID_Customer] [int] not null,
-	[Date] [datetimeoffset] not null,
+	[Date] [datetime] not null,
 	[Amount] [float] not null,
 	[Remarks] [nvarchar](100) not null,
 	constraint [PK_CashVoucher_ID] primary key clustered ([ID] asc),
@@ -54,7 +54,7 @@ create table [dbo].[Invoice]
 (
 	[ID] [int] identity(1,1) not null,
 	[FK_ID_Customer] [int] not null,
-	[Date] [datetimeoffset] not null,
+	[Date] [datetime] not null,
 	[Discount] [float] not null,
 	[Total] [float] not null,
 	[Balance] [float] not null,
@@ -89,3 +89,10 @@ create index [IX_InvoiceItem_FK_ID_Invoice] on [dbo].[InvoiceItem] ([FK_ID_Invoi
 
 use [KLDFishStallAccounts]
 go
+
+-------------------------------------------Default Data-------------------------------------------------------------------------------------------------
+
+use [KLDFishStallAccounts]
+go
+
+INSERT INTO [dbo].[User] ([Name],[UserID],[Password]) VALUES ('KLD Fish Stall Admin','admin','lWz+ZN1fCiZdfxvjtTwr6iNWpUFR3Hk5onQmOLRM5nU=')

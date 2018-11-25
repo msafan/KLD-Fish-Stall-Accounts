@@ -11,7 +11,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_ID_Customer" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Amount" Type="float" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
@@ -38,7 +38,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_ID_Customer" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Discount" Type="float" Nullable="false" />
           <Property Name="Total" Type="float" Nullable="false" />
           <Property Name="Balance" Type="float" Nullable="false" />
@@ -100,7 +100,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InvoiceItem_Invoice">
-          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Invoice">
@@ -146,7 +148,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FK_ID_Customer" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Amount" Type="Double" Nullable="false" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_CashVoucher_Customer" FromRole="CashVoucher" ToRole="Customer" />
@@ -177,7 +179,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FK_ID_Customer" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Discount" Type="Double" Nullable="false" />
           <Property Name="Total" Type="Double" Nullable="false" />
           <Property Name="Balance" Type="Double" Nullable="false" />
@@ -243,7 +245,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InvoiceItem_Invoice">
-          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Invoice">
