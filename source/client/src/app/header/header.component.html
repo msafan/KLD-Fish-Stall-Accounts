@@ -19,7 +19,7 @@
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" [routerLink]='[]' id="userDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-user-circle fa-fw"></i> {{sharedModel.user === null ? '' : sharedModel.User.Name}}
+        <i class="fa fa-user-circle fa-fw"></i> {{sharedModel.User === null ? '' : sharedModel.User.Name}}
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
         <a class="dropdown-item" [routerLink]='["/profile"]'><i class="fa fa-gears fa-fw"></i> Settings</a>

@@ -13,10 +13,10 @@
     <button class="btn btn-primary btn-block" [disabled]="!_selectedInvoice" (click)="viewInvoice()"><i class="fa fa-eye fa-fw"></i> View</button>
   </div>
   <div class="col-lg-2">
-    <button class="btn btn-warning btn-block" [disabled]="!_selectedInvoice" (click)="editInvoice()"><i class="fa fa-pencil fa-fw"></i> Edit</button>
+    <button class="btn btn-warning btn-block" disabled (click)="editInvoice()"><i class="fa fa-pencil fa-fw"></i> Edit</button>
   </div>
   <div class="col-lg-2">
-    <button class="btn btn-danger btn-block" [disabled]="!_selectedInvoice"><i class="fa fa-times fa-fw"></i> Delete</button>
+    <button class="btn btn-danger btn-block" [disabled]="!_selectedInvoice" (click)="deleteInvoice()"><i class="fa fa-times fa-fw"></i> Delete</button>
   </div>
 </div>
 <br>

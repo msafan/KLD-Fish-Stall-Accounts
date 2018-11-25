@@ -59,7 +59,7 @@ namespace KLDFishStallAccounts.Service.Services
                 throw new Exception("Could not find the customer");
 
             customer.Balance += cashVoucher.Amount;
-            _unitOfWork.CashVoucher.Delete(cashVoucher);
+            _unitOfWork.CashVoucher.Delete(x => x.ID == cashVoucher.ID);
             _unitOfWork.Customer.Update(customer);
             _unitOfWork.Commit();
         }
@@ -75,7 +75,7 @@ namespace KLDFishStallAccounts.Service.Services
                 throw new Exception("Could not find the customer");
 
             customer.Balance -= invoice.Total;
-            _unitOfWork.CashVoucher.Delete(invoice);
+            _unitOfWork.Invoice.Delete(x => x.ID == invoice.ID);
             _unitOfWork.Customer.Update(customer);
             _unitOfWork.Commit();
         }
@@ -96,6 +96,8 @@ namespace KLDFishStallAccounts.Service.Services
 
             oldCustomer.Balance += cashVoucherFromDB.Amount;
             _unitOfWork.Customer.Update(oldCustomer);
+            _unitOfWork.Commit();
+            _unitOfWork.Customer.Detach(oldCustomer);
             _unitOfWork.Commit();
 
             cashVoucherFromDB.Amount = cashVoucher.Amount;
@@ -130,6 +132,8 @@ namespace KLDFishStallAccounts.Service.Services
             oldCustomer.Balance -= invoiceFromDB.Total;
             _unitOfWork.Customer.Update(oldCustomer);
             _unitOfWork.Commit();
+            _unitOfWork.Customer.Detach(oldCustomer);
+            _unitOfWork.Commit();
 
             invoiceFromDB.Total = invoice.Total;
             invoiceFromDB.Date = invoice.Date;
@@ -138,18 +142,20 @@ namespace KLDFishStallAccounts.Service.Services
             invoiceFromDB.Discount = invoice.Discount;
             _unitOfWork.Invoice.Update(invoiceFromDB);
 
-            _unitOfWork.InvoiceItem.Delete(x => x.ID == invoiceFromDB.ID);
-
-            var invoiceItems = invoice.InvoiceItems.Select(x => x.Map()).ToList();
-            invoiceItems.ForEach(x => x.FK_ID_Invoice = invoiceFromDB.ID);
-            _unitOfWork.InvoiceItem.InsertAll(invoiceItems);
-
             newCustomer = _unitOfWork.Customer.Get(x => x.ID == invoice.FK_ID_Customer);
             newCustomer.Balance += invoice.Total;
             _unitOfWork.Customer.Update(newCustomer);
 
+            _unitOfWork.InvoiceItem.Delete(x => x.FK_ID_Invoice == invoiceFromDB.ID);
             _unitOfWork.Commit();
 
+
+            var invoiceItems = invoice.InvoiceItems.Select(x => x.Map()).ToList();
+            invoiceItems.ForEach(x => x.FK_ID_Invoice = invoiceFromDB.ID);
+            _unitOfWork.InvoiceItem.InsertAll(invoiceItems);
+            _unitOfWork.Commit();
+
+            invoiceFromDB = _unitOfWork.Invoice.Get(x => x.ID == invoiceFromDB.ID);
             return new InvoiceDTO(invoiceFromDB);
         }
 

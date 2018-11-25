@@ -15,20 +15,22 @@ import { BaseComponentModule } from '../base-component/base-component.module';
 })
 export class ViewCustomerComponent extends BaseComponentModule {
   _customer: Customer;
-  @ViewChild(GridComponent) _customerStatement: GridComponent;
-  @ViewChild(GridComponent) _cashVouchers: GridComponent;
-  @ViewChild(GridComponent) _invoices: GridComponent;
+  @ViewChild('customerStatementTable') _customerStatement: GridComponent;
+  @ViewChild('cashVouchersTable') _cashVouchers: GridComponent;
+  @ViewChild('invoicesTable') _invoices: GridComponent;
 
   _selectedCustomerStatement: CustomerStatement = undefined;
   _selectedInvoice: Invoice = undefined;
   _selectedCashVoucher: CashVoucher = undefined;
+  _startDate: any;
+  _endDate: any;
 
   _customerStatementGridOptions: GridOptions = {
     Columns: [
       new GridColumn('Date', 'Date', 'date', true, new DateFilter('', 'eq', '', '')),
       new GridColumn('ID', '#', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Particulars', 'Particulars', 'string', true, new TextFilter('', 'eq')),
-      new GridColumn('Total', 'Amount', 'number', true, new NumberFilter('', 'eq')),
+      new GridColumn('Amount', 'Amount', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Balance', 'Balance', 'number', true, new NumberFilter('', 'eq'))
     ],
     Filterable: true,
@@ -137,4 +139,24 @@ export class ViewCustomerComponent extends BaseComponentModule {
     this.printService.print(printContents);
   }
 
+  filter() {
+    let startDate: Date = new Date(this._startDate.year, this._startDate.month - 1, this._startDate.day);
+    let endDate: Date = new Date(this._endDate.year, this._endDate.month - 1, this._endDate.day);
+    this.getCustomerStatement(this._customer.ID, { StartDate: startDate, EndDate: endDate });
+  }
+
+  viewCustomerStatement() {
+    if (this._selectedCustomerStatement.Particulars === 'Sales Invoice')
+      this.router.navigate(['/view-invoice', this._selectedCustomerStatement.ID]);
+    else
+      this.router.navigate(['/view-cash-voucher', this._selectedCustomerStatement.ID]);
+  }
+
+  viewInvoice() {
+    this.router.navigate(['/view-invoice', this._selectedInvoice.ID]);
+  }
+
+  viewCashVoucher() {
+    this.router.navigate(['/view-cash-voucher', this._selectedCashVoucher.ID]);
+  }
 }

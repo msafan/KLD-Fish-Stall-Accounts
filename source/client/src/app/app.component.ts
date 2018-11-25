@@ -9,6 +9,6 @@ import { SharedModelService } from './shared-model.service';
 export class AppComponent {
   title = 'KLD-Fish-Stall-Accounts';
 
-  constructor(private sharedModel: SharedModelService) {
+  constructor(public sharedModel: SharedModelService) {
   }
 }

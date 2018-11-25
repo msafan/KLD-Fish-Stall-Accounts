@@ -23,7 +23,8 @@ export class NewInvoiceComponent extends BaseComponentModule {
     Discount: 0,
     FK_ID_Customer: -1,
     Total: 0,
-    InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }]
+    InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }],
+    Customer: undefined
   };
   _customers: Array<Customer> = [];
   _customerNames: Array<string> = [];
@@ -51,6 +52,7 @@ export class NewInvoiceComponent extends BaseComponentModule {
     this.route.params.subscribe(params => {
       if (params.id) {
         this.getInvoiceByID(params.id);
+        this._isEditing = true;
       }
     })
   }
@@ -60,8 +62,12 @@ export class NewInvoiceComponent extends BaseComponentModule {
       if (error) {
         this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
+        let date: Date = new Date(response.Date);
         this._invoice = response;
-        this._invoice.Date = new Date();
+        this._invoice.InvoiceItems = response.InvoiceItems.map(x => {
+          return { Total: x.Total, ID: x.ID, FK_ID_Fish: x.FK_ID_Fish, Quantity: x.Quantity, Rate: x.Rate }
+        });
+        this._invoice.Date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
       }
     });
   }
@@ -150,12 +156,16 @@ export class NewInvoiceComponent extends BaseComponentModule {
       Discount: 0,
       FK_ID_Customer: -1,
       Total: 0,
-      InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }]
+      InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }],
+      Customer: undefined
     };
 
     this._selectedCustomer = { ID: -1, Address: '', Balance: 0, Name: '', PhoneNumber: '' };
     this._customerTextBox.clear();
     this._canByPass = true;
+
+    this.getAllCustomers();
+    this.getAllFishes();
 
     if (this._isEditing)
       this.router.navigate(['/list-invoice']);

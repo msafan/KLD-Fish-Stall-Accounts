@@ -11,4 +11,11 @@ namespace KLDFishStallAccounts.DTO.Common
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
+
+    public class DateRangeDTO
+    {
+        public int ID { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+    }
 }

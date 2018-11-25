@@ -8,7 +8,7 @@ import { SharedModelService } from '../shared-model.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private sharedModel: SharedModelService) { }
+  constructor(public sharedModel: SharedModelService) { }
 
   ngOnInit() {
   }

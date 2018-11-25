@@ -86,7 +86,7 @@
               <div class="col-lg-2">
                 <div class="form-group">
                   <label> &nbsp;</label>
-                  <button class="form-control btn btn-primary" [disabled]="!_selectedCustomerStatement" (click)="filter()"><i
+                  <button class="form-control btn btn-primary" [disabled]="!_selectedCustomerStatement" (click)="viewCustomerStatement()"><i
                       class="fa fa-eye fa-fw"></i>
                     View</button>
                 </div>
@@ -99,7 +99,7 @@
               </div>
             </div>
             <br>
-            <app-grid id="customerStatementTable" [(options)]="_customerStatementGridOptions" (rowSelectionChanged)="selectedCustomerStatementChanged($event)"></app-grid>
+            <app-grid id="customerStatementTable" #customerStatementTable [(options)]="_customerStatementGridOptions" (rowSelectionChanged)="selectedCustomerStatementChanged($event)"></app-grid>
           </div>
         </div>
       </div>
@@ -118,7 +118,7 @@
               </div>
             </div>
             <br>
-            <app-grid id='invoicesTable' [(options)]="_invoicesGridOptions" (rowSelectionChanged)="selectedInvoiceChanged($event)"></app-grid>
+            <app-grid id='invoicesTable' #invoicesTable [(options)]="_invoicesGridOptions" (rowSelectionChanged)="selectedInvoiceChanged($event)"></app-grid>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@
               </div>
             </div>
             <br>
-            <app-grid id='cashVouchersTable' [(options)]="_cashVouchersGridOptions" (rowSelectionChanged)="selectedCashVoucherChanged($event)"></app-grid>
+            <app-grid id='cashVouchersTable' #cashVouchersTable [(options)]="_cashVouchersGridOptions" (rowSelectionChanged)="selectedCashVoucherChanged($event)"></app-grid>
           </div>
         </div>
       </div>

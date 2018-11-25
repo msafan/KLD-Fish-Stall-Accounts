@@ -8,10 +8,10 @@ import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators'
   styleUrls: ['./auto-complete-text-box.component.css']
 })
 export class AutoCompleteTextBoxComponent implements OnInit {
+  @Input() value: string = '';
   @Input() suggestions: Array<string> = new Array<string>();
   @Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
-  value: string;
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),

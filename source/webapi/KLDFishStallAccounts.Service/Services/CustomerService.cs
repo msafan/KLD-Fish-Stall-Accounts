@@ -102,7 +102,7 @@ namespace KLDFishStallAccounts.Service.Services
                     Amount = x.Total,
                     Date = x.Date,
                     ID = x.ID,
-                    Particulars = "Sales InvoiceDTO"
+                    Particulars = "Sales Invoice"
                 }));
 
             customerStatements.AddRange(_unitOfWork.CashVoucher.
@@ -120,8 +120,8 @@ namespace KLDFishStallAccounts.Service.Services
 
             var customerStatementsToReturn = customerStatements.OrderBy(x => x.Date).ToList();
 
-            var hasCashVouchersBeyondDate = _unitOfWork.CashVoucher.GetAllQueryable().Any(x => x.ID == id && x.Date > dateRange.EndDate);
-            var hasInvoicesBeyondDate = _unitOfWork.Invoice.GetAllQueryable().Any(x => x.ID == id && x.Date > dateRange.EndDate);
+            var hasCashVouchersBeyondDate = _unitOfWork.CashVoucher.GetAllQueryable().Any(x => x.FK_ID_Customer == id && x.Date > dateRange.EndDate);
+            var hasInvoicesBeyondDate = _unitOfWork.Invoice.GetAllQueryable().Any(x => x.FK_ID_Customer == id && x.Date > dateRange.EndDate);
             if (hasCashVouchersBeyondDate || hasInvoicesBeyondDate)
                 return customerStatementsToReturn;
 
@@ -131,7 +131,7 @@ namespace KLDFishStallAccounts.Service.Services
             customerStatementsToReturn.ForEach(x =>
             {
                 x.Balance = currentBalance;
-                currentBalance += (x.Amount * (x.Particulars == "Sales InvoiceDTO" ? -1 : 1));
+                currentBalance += (x.Amount * (x.Particulars == "Sales Invoice" ? -1 : 1));
             });
 
             customerStatementsToReturn.Reverse();
@@ -147,7 +147,7 @@ namespace KLDFishStallAccounts.Service.Services
             {
                 ID = int.MinValue,
                 Particulars = "Closing Balance",
-                Balance = currentBalance
+                Balance = customer.Balance
             });
 
             return customerStatementsToReturn;

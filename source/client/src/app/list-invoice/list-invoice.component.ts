@@ -43,6 +43,8 @@ export class ListInvoiceComponent extends BaseComponentModule {
       if (error) {
         this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
+        this._grid.clear();
+
         let invoices: Array<Invoice> = response.filter(x => true);
 
         invoices.forEach(item => {
@@ -70,6 +72,17 @@ export class ListInvoiceComponent extends BaseComponentModule {
 
   editInvoice() {
     this.router.navigate(['/new-invoice', this._selectedInvoice.ID]);
+  }
+
+  deleteInvoice() {
+    this.webApiService.Get<any>('Invoice/DeleteInvoice/?id=' + this._selectedInvoice.ID, (response, error) => {
+      if (error) {
+        this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
+      } else {
+        this.notifier.notify('success', 'Invoice deleted successfully');
+        this.getAllInvoices();
+      }
+    });
   }
 
 }

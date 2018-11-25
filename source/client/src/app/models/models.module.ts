@@ -27,6 +27,7 @@ export class CashVoucher {
   Date: Date;
   Amount: number;
   Remarks: string;
+  Customer: Customer;
 }
 
 export class Invoice {
@@ -37,6 +38,7 @@ export class Invoice {
   Total: number;
   Balance: number;
   InvoiceItems: Array<InvoiceItem>;
+  Customer: Customer;
 }
 
 export class InvoiceItem {

@@ -2,6 +2,7 @@
 using KLDFishStallAccounts.DTO.Customer;
 using KLDFishStallAccounts.Service.Contracts;
 using KLDFishStallAccounts.WebApi.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -48,7 +49,7 @@ namespace KLDFishStallAccounts.WebApi.Controllers
         }
 
         [HttpPost]
-        public List<CustomerStatement> GetCustomerStatement([FromUri] int id, [FromBody]DateRange dateRange)
+        public List<CustomerStatement> GetCustomerStatement([FromUri]int id,[FromBody]DateRange dateRange)
         {
             return _customerService.GetCustomerStatement(id, dateRange);
         }
