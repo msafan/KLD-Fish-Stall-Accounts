@@ -37,8 +37,11 @@ export class SettingsComponent extends BaseComponentModule {
       if (error) {
         this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else {
-        this.notifier.notify('success', 'Password Changed Successfully. Please login with your new credentials');
-        this.router.navigate(['/logout']);
+        this.notifier.notify('success', 'Password Changed Successfully');
+        this._oldPassword = '';
+        this._newPassword = '';
+        this._confirmPassword = '';
+        this._canByPass = true;
       }
     });
   }
