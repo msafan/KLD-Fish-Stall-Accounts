@@ -20,7 +20,6 @@ export class ManageFishComponent extends BaseComponentModule {
   _canByPass: boolean = true;
   _gridOptions: GridOptions = {
     Columns: [
-      new GridColumn('ID', '#', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Name', 'Fish Name', 'string', true, new TextFilter('', 'eq'))
     ],
     Filterable: true,

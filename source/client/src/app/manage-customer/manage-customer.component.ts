@@ -20,7 +20,6 @@ export class ManageCustomerComponent extends BaseComponentModule {
 
   _gridOptions: GridOptions = {
     Columns: [
-      new GridColumn('ID', '#', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Name', 'Name', 'string', true, new TextFilter('', 'eq')),
       new GridColumn('Address', 'Address', 'string', true, new TextFilter('', 'eq')),
       new GridColumn('PhoneNumber', 'Phone Number', 'string', true, new TextFilter('', 'eq'))

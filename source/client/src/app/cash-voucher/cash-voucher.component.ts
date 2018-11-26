@@ -30,7 +30,7 @@ export class CashVoucherComponent extends BaseComponentModule {
   @ViewChild(GridComponent) _grid: GridComponent;
   _gridOptions: GridOptions = {
     Columns: [
-      new GridColumn('ID', '#', 'number', true, new NumberFilter('', 'eq')),
+      new GridColumn('ID', 'Voucher #', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Date', 'Date', 'date', true, new DateFilter('', 'eq', '', '')),
       new GridColumn('Customer.Name', 'Customer', 'string', true, new TextFilter('', 'eq')),
       new GridColumn('Remarks', 'Remarks', 'string', true, new TextFilter('', 'eq')),
