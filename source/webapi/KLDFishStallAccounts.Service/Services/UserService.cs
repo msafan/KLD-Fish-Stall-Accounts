@@ -19,7 +19,7 @@ namespace KLDFishStallAccounts.Service.Services
         public UserDTO AddUser(UserDTO user)
         {
             var userFromDB = _unitOfWork.User.Get(x => user.UserID.ToLowerInvariant() == user.UserID.ToLowerInvariant());
-            if (userFromDB != null)
+            if (userFromDB == null)
                 throw new Exception($"User with UserId: {user.UserID} already exists");
 
             user.Password = AESEncryption.Encrypt(user.Password);
@@ -45,6 +45,13 @@ namespace KLDFishStallAccounts.Service.Services
 
         public void DeleteUser(int id)
         {
+            var user = _unitOfWork.User.Get(x => x.ID == id);
+            if (user == null)
+                throw new Exception("Could not find the user");
+
+            if (user.UserID.ToLowerInvariant() == "admin")
+                throw new Exception("Cannot delete default user");
+
             _unitOfWork.User.Delete(x => x.ID == id);
             _unitOfWork.Commit();
         }
@@ -66,7 +73,7 @@ namespace KLDFishStallAccounts.Service.Services
             }
 
             userToUpdate.Name = user.Name;
-            userToUpdate.UserID = user.Name;
+            userToUpdate.UserID = user.UserID;
             if (!string.IsNullOrEmpty(user.Password))
                 userToUpdate.Password = AESEncryption.Encrypt(user.Password);
 

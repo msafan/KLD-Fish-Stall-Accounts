@@ -24,22 +24,23 @@ import { LogoutComponent } from './logout/logout.component';
 import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
 import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 /**
  * Custom angular notifier options
  */
 const customNotifierOptions: NotifierOptions = {
   position: {
-		horizontal: {
-			position: 'right',
-			distance: 12
-		},
-		vertical: {
-			position: 'top',
-			distance: 12,
-			gap: 10
-		}
-	},
+    horizontal: {
+      position: 'right',
+      distance: 12
+    },
+    vertical: {
+      position: 'top',
+      distance: 12,
+      gap: 10
+    }
+  },
   theme: 'material',
   behaviour: {
     autoHide: 5000,
@@ -88,7 +89,8 @@ const customNotifierOptions: NotifierOptions = {
     LogoutComponent,
     CashVoucherComponent,
     ViewCashVoucherComponent,
-    SettingsComponent
+    SettingsComponent,
+    ManageUserComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
 import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ManageUserComponent } from './manage-user/manage-user.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'manage-customer', component: ManageCustomerComponent },
   { path: 'manage-fish', component: ManageFishComponent },
+  { path: 'manage-user', component: ManageUserComponent },
   { path: 'new-invoice', component: NewInvoiceComponent },
   { path: 'new-invoice/:id', component: NewInvoiceComponent },
   { path: 'cash-voucher', component: CashVoucherComponent },
