@@ -10,7 +10,7 @@ export class SharedModelService {
   public BaseURI: string;
 
   constructor(localStorage: LocalStorageService) {
-    this.BaseURI = 'http://localhost:53259/';
+    this.BaseURI = 'http://localhost/KLDWebApi/';
     this.User = JSON.parse(localStorage.get('userCredentails'));
   }
 }
