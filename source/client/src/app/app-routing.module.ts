@@ -11,6 +11,7 @@ import { ViewCustomerComponent } from './view-customer/view-customer.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
 import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'view-invoice/:id', component: ViewInvoiceComponent },
   { path: 'view-customer/:id', component: ViewCustomerComponent },
   { path: 'view-cash-voucher/:id', component: ViewCashVoucherComponent },
-  { path: 'logout', component: LogoutComponent }
+  { path: 'logout', component: LogoutComponent },
+  { path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule({

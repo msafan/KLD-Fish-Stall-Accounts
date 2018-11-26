@@ -23,6 +23,7 @@ import { ViewInvoiceComponent } from './view-invoice/view-invoice.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
 import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
+import { SettingsComponent } from './settings/settings.component';
 
 /**
  * Custom angular notifier options
@@ -86,7 +87,8 @@ const customNotifierOptions: NotifierOptions = {
     ViewInvoiceComponent,
     LogoutComponent,
     CashVoucherComponent,
-    ViewCashVoucherComponent
+    ViewCashVoucherComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
