@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Invoice, Customer, Fish, InvoiceItem } from '../models/models.module';
 import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { WebapiService } from '../webapi.service';
@@ -23,7 +23,7 @@ export class NewInvoiceComponent extends BaseComponentModule {
     Discount: 0,
     FK_ID_Customer: -1,
     Total: 0,
-    InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }],
+    InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0, Fish: undefined }],
     Customer: undefined
   };
   _customers: Array<Customer> = [];
@@ -64,10 +64,9 @@ export class NewInvoiceComponent extends BaseComponentModule {
       } else if (response) {
         let date: Date = new Date(response.Date);
         this._invoice = response;
-        this._invoice.InvoiceItems = response.InvoiceItems.map(x => {
-          return { Total: x.Total, ID: x.ID, FK_ID_Fish: x.FK_ID_Fish, Quantity: x.Quantity, Rate: x.Rate }
-        });
+        this._customerTextBox.value = response.Customer.Name;
         this._invoice.Date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        this._invoice.InvoiceItems.push({ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0, Fish: undefined });
       }
     });
   }
@@ -112,7 +111,7 @@ export class NewInvoiceComponent extends BaseComponentModule {
     let fish = this._fishes.filter((item) => item.Name === fishName)[0];
     invoiceItem.FK_ID_Fish = fish.ID;
     if (this._invoice.InvoiceItems[this._invoice.InvoiceItems.length - 1].FK_ID_Fish !== -1) {
-      this._invoice.InvoiceItems.push({ Total: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0 });
+      this._invoice.InvoiceItems.push({ Total: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0, Fish: undefined });
     }
   }
 
@@ -156,7 +155,7 @@ export class NewInvoiceComponent extends BaseComponentModule {
       Discount: 0,
       FK_ID_Customer: -1,
       Total: 0,
-      InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0 }],
+      InvoiceItems: [{ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0, Fish: undefined }],
       Customer: undefined
     };
 
@@ -167,19 +166,25 @@ export class NewInvoiceComponent extends BaseComponentModule {
     this.getAllCustomers();
     this.getAllFishes();
 
-    if (this._isEditing)
+    if (this._isEditing) {
       this.router.navigate(['/list-invoice']);
+    }
   }
 
   save() {
     this._canByPass = false;
-    if (this._includeBalance)
+    if (this._includeBalance) {
       this._invoice.Balance = this._selectedCustomer.Balance;
+    }
 
-    if (!this.isFormValid())
+    if (!this.isFormValid()) {
       return;
+    }
 
-    this._invoice.InvoiceItems = this._invoice.InvoiceItems.filter(x => x.FK_ID_Fish !== -1);
+    this._invoice.Customer = undefined;
+    this._invoice.InvoiceItems = this._invoice.InvoiceItems.filter(x => x.FK_ID_Fish !== -1).map(x => {
+      return { Total: x.Total, ID: x.ID, FK_ID_Fish: x.FK_ID_Fish, Quantity: x.Quantity, Rate: x.Rate, Fish: undefined };
+    });
 
     if (this._invoice.ID !== -1) {
       this.webApiService.Post<Invoice>('Invoice/EditInvoice', this._invoice, (response, error) => {
@@ -203,7 +208,7 @@ export class NewInvoiceComponent extends BaseComponentModule {
       });
     }
 
-    this._invoice.InvoiceItems.push({ Total: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0 });
+    this._invoice.InvoiceItems.push({ Total: 0, FK_ID_Fish: -1, ID: -1, Quantity: 0, Rate: 0, Fish: undefined });
   }
 
   isFormValid() {

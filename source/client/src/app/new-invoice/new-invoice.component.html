@@ -67,7 +67,8 @@
             </td>
             <td>
               <div class="form-group">
-                <app-auto-complete-text-box (changed)="fishChanged($event, invoiceItem)" [(suggestions)]="_fishNames"></app-auto-complete-text-box>
+                <app-auto-complete-text-box [value]="invoiceItem.Fish ?invoiceItem.Fish.Name : ''"
+                  (changed)="fishChanged($event, invoiceItem)" [(suggestions)]="_fishNames"></app-auto-complete-text-box>
               </div>
             </td>
             <td>

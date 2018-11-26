@@ -47,6 +47,7 @@ export class InvoiceItem {
   Quantity: number;
   Rate: number;
   Total: number;
+  Fish: Fish;
 }
 
 export class DateRange {
