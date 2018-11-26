@@ -12,7 +12,7 @@ namespace KLDFishStallAccounts.DTO.Invoice
         public InvoiceDTO(Model.EDMX.Invoice item) : base(item)
         {
             ID = item.ID;
-            FK_ID_Customer = item.ID;
+            FK_ID_Customer = item.FK_ID_Customer;
             Date = item.Date;
             Discount = item.Discount;
             Total = item.Total;

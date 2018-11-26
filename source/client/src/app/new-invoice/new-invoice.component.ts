@@ -67,6 +67,8 @@ export class NewInvoiceComponent extends BaseComponentModule {
         this._customerTextBox.value = response.Customer.Name;
         this._invoice.Date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
         this._invoice.InvoiceItems.push({ Total: 0, ID: -1, FK_ID_Fish: -1, Quantity: 0, Rate: 0, Fish: undefined });
+        this._includeBalance = this._invoice.Balance !== 0;
+        this._selectedCustomer = response.Customer;
       }
     });
   }

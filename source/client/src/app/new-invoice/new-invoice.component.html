@@ -112,7 +112,7 @@
     <div class="form-group">
       <label>
         <input type="checkbox" [(ngModel)]="_includeBalance" />
-        Include Balance: Rs.{{_selectedCustomer.Balance}}
+        Include Balance: Rs. <input [(ngModel)]="_selectedCustomer.Balance" />
       </label>
     </div>
   </div>
