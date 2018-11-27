@@ -21,7 +21,7 @@ export class ManageUserComponent extends BaseComponentModule {
   _canByPass: boolean = true;
   _gridOptions: GridOptions = {
     Columns: [
-      new GridColumn('Name', 'Name', 'string', true, new TextFilter('', 'eq'))
+      new GridColumn('Name', 'Name', 'string', true, new TextFilter('', 'eq')),
       new GridColumn('UserID', 'User ID', 'string', true, new TextFilter('', 'eq'))
     ],
     Filterable: true,
