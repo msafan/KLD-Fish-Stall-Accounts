@@ -18,8 +18,8 @@ namespace KLDFishStallAccounts.Service.Services
 
         public UserDTO AddUser(UserDTO user)
         {
-            var userFromDB = _unitOfWork.User.Get(x => user.UserID.ToLowerInvariant() == user.UserID.ToLowerInvariant());
-            if (userFromDB == null)
+            var userFromDB = _unitOfWork.User.Get(x => x.UserID.ToLowerInvariant() == user.UserID.ToLowerInvariant());
+            if (userFromDB != null)
                 throw new Exception($"User with UserId: {user.UserID} already exists");
 
             user.Password = AESEncryption.Encrypt(user.Password);
