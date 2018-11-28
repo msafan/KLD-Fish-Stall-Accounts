@@ -6,11 +6,13 @@ import { WebapiService } from '../webapi.service';
 import { NotifierService } from 'angular-notifier';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedModelService } from '../shared-model.service';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-new-purchase-invoice',
   templateUrl: './new-purchase-invoice.component.html',
-  styleUrls: ['./new-purchase-invoice.component.css']
+  styleUrls: ['./new-purchase-invoice.component.css'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class NewPurchaseInvoiceComponent extends BaseComponentModule {
   _purchaseInvoice: PurchaseInvoice = {

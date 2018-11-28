@@ -19,14 +19,14 @@
           aria-haspopup="true" aria-expanded="false"> <i class="fa fa-wrench fa-fw"></i> Manage </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" [routerLink]='["/manage-customer"]'><i class="fa fa-user-md fa-fw"></i> Customers</a>
-          <a class="dropdown-item" [routerLink]='["/manage-supplier"]'><i class="fa fa-user-md fa-fw"></i> Supplier</a>
+          <a class="dropdown-item" [routerLink]='["/manage-supplier"]'><i class="fa fa-users fa-fw"></i> Supplier</a>
           <a class="dropdown-item" [routerLink]='["/manage-fish"]'><i class="fa fa-rocket fa-fw"></i> Fish</a>
           <a class="dropdown-item" [routerLink]='["/manage-user"]'><i class="fa fa-user fa-fw"></i> User</a>
         </div>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope-o fa-fw"></i> Sale Invice</a>
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-upload fa-fw"></i> Sale Invice</a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" [routerLink]='["/new-invoice"]'><i class="fa fa-plus fa-fw"></i> New Invoice</a>
           <a class="dropdown-item" [routerLink]='["/list-invoice"]'><i class="fa fa-th-list fa-fw"></i> List Invoices</a>
@@ -34,7 +34,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope-o fa-fw"></i> Purchase Invice</a>
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-download fa-fw"></i> Purchase Invice</a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" [routerLink]='["/new-purchase-invoice"]'><i class="fa fa-plus fa-fw"></i> New Invoice</a>
           <a class="dropdown-item" [routerLink]='["/list-purchase-invoice"]'><i class="fa fa-th-list fa-fw"></i> List Invoices</a>
@@ -44,8 +44,8 @@
         <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false"> <i class="fa fa-dollar fa-fw"></i> Cash Voucher</a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <a class="dropdown-item" [routerLink]='["/cash-voucher"]'><i class="fa fa-dollar fa-fw"></i> Customer Payment</a>
-          <a class="dropdown-item" [routerLink]='["/payment-voucher"]'><i class="fa fa-dollar fa-fw"></i> SUpplier Payment</a>
+          <a class="dropdown-item" [routerLink]='["/cash-voucher"]'><i class="fa fa-user-md fa-fw"></i> Customer Payment</a>
+          <a class="dropdown-item" [routerLink]='["/payment-voucher"]'><i class="fa fa-users fa-fw"></i> Supplier Payment</a>
         </div>
       </li>
     </ul>

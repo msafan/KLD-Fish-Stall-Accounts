@@ -8,11 +8,13 @@ import { Router } from '@angular/router';
 import { CommonService } from '../common.service';
 import { NotifierService } from 'angular-notifier';
 import { WebapiService } from '../webapi.service';
+import { NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-payment-voucher',
   templateUrl: './payment-voucher.component.html',
-  styleUrls: ['./payment-voucher.component.css']
+  styleUrls: ['./payment-voucher.component.css'],
+  providers: [{ provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }]
 })
 export class PaymentVoucherComponent extends BaseComponentModule {
   _paymentVoucher: PaymentVoucher = {

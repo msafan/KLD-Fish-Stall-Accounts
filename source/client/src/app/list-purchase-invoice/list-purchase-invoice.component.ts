@@ -19,7 +19,7 @@ export class ListPurchaseInvoiceComponent extends BaseComponentModule {
   _gridOptions: GridOptions = {
     Columns: [
       new GridColumn('ID', 'Invoice #', 'number', true, new NumberFilter('', 'eq')),
-      new GridColumn('Customer.Name', 'Customer Name', 'string', true, new TextFilter('', 'eq')),
+      new GridColumn('Supplier.Name', 'Supplier Name', 'string', true, new TextFilter('', 'eq')),
       new GridColumn('Date', 'Date', 'date', true, new DateFilter('', 'eq', '', '')),
       new GridColumn('Total', 'Amount', 'number', true, new NumberFilter('', 'eq'))
     ],

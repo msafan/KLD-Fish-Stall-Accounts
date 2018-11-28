@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KLDFishStallAccountsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KLDFishStallAccountsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CashVoucher">
           <Key>
             <PropertyRef Name="ID" />
@@ -249,7 +249,8 @@
             <End Role="PurchaseInvoiceItem" EntitySet="PurchaseInvoiceItem" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KLDFishStallAccountsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -283,7 +284,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="InvoiceItems" Relationship="Self.FK_InvoiceItem_Fish" FromRole="Fish" ToRole="InvoiceItem" />
-          <NavigationProperty Name="PurchaseInvoiceItems" Relationship="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_Fish" FromRole="Fish" ToRole="PurchaseInvoiceItem" />
+          <NavigationProperty Name="PurchaseInvoiceItems" Relationship="Self.FK_PurchaseInvoiceItem_Fish" FromRole="Fish" ToRole="PurchaseInvoiceItem" />
         </EntityType>
         <EntityType Name="Invoice">
           <Key>
@@ -310,6 +311,55 @@
           <Property Name="Total" Type="Double" Nullable="false" />
           <NavigationProperty Name="Fish" Relationship="Self.FK_InvoiceItem_Fish" FromRole="InvoiceItem" ToRole="Fish" />
           <NavigationProperty Name="Invoice" Relationship="Self.FK_InvoiceItem_Invoice" FromRole="InvoiceItem" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="PaymentVoucher">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_ID_Supplier" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_PaymentVoucher_Supplier" FromRole="PaymentVoucher" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="PurchaseInvoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_ID_Supplier" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Discount" Type="Double" Nullable="false" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="Balance" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_PurchaseInvoice_Supplier" FromRole="PurchaseInvoice" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseInvoiceItems" Relationship="Self.FK_PurchaseInvoiceItem_PurchaseInvoice" FromRole="PurchaseInvoice" ToRole="PurchaseInvoiceItem" />
+        </EntityType>
+        <EntityType Name="PurchaseInvoiceItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_ID_PurchaseInvoice" Type="Int32" Nullable="false" />
+          <Property Name="FK_ID_Fish" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Fish" Relationship="Self.FK_PurchaseInvoiceItem_Fish" FromRole="PurchaseInvoiceItem" ToRole="Fish" />
+          <NavigationProperty Name="PurchaseInvoice" Relationship="Self.FK_PurchaseInvoiceItem_PurchaseInvoice" FromRole="PurchaseInvoiceItem" ToRole="PurchaseInvoice" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Balance" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PaymentVouchers" Relationship="Self.FK_PaymentVoucher_Supplier" FromRole="Supplier" ToRole="PaymentVoucher" />
+          <NavigationProperty Name="PurchaseInvoices" Relationship="Self.FK_PurchaseInvoice_Supplier" FromRole="Supplier" ToRole="PurchaseInvoice" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -356,6 +406,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PurchaseInvoiceItem_Fish">
+          <End Role="Fish" Type="Self.Fish" Multiplicity="1" />
+          <End Role="PurchaseInvoiceItem" Type="Self.PurchaseInvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fish">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PurchaseInvoiceItem">
+              <PropertyRef Name="FK_ID_Fish" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InvoiceItem_Invoice">
           <End Role="Invoice" Type="Self.Invoice" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -370,12 +432,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentVoucher_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PaymentVoucher" Type="Self.PaymentVoucher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PaymentVoucher">
+              <PropertyRef Name="FK_ID_Supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseInvoice_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PurchaseInvoice" Type="Self.PurchaseInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PurchaseInvoice">
+              <PropertyRef Name="FK_ID_Supplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseInvoiceItem_PurchaseInvoice">
+          <End Role="PurchaseInvoice" Type="Self.PurchaseInvoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PurchaseInvoiceItem" Type="Self.PurchaseInvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseInvoice">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PurchaseInvoiceItem">
+              <PropertyRef Name="FK_ID_PurchaseInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="KLDFishStallAccountsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CashVouchers" EntityType="Self.CashVoucher" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Fish" EntityType="Self.Fish" />
           <EntitySet Name="Invoices" EntityType="Self.Invoice" />
           <EntitySet Name="InvoiceItems" EntityType="Self.InvoiceItem" />
+          <EntitySet Name="PaymentVouchers" EntityType="Self.PaymentVoucher" />
+          <EntitySet Name="PurchaseInvoices" EntityType="Self.PurchaseInvoice" />
+          <EntitySet Name="PurchaseInvoiceItems" EntityType="Self.PurchaseInvoiceItem" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_CashVoucher_Customer" Association="Self.FK_CashVoucher_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -389,130 +493,27 @@
             <End Role="Fish" EntitySet="Fish" />
             <End Role="InvoiceItem" EntitySet="InvoiceItems" />
           </AssociationSet>
+          <AssociationSet Name="FK_PurchaseInvoiceItem_Fish" Association="Self.FK_PurchaseInvoiceItem_Fish">
+            <End Role="Fish" EntitySet="Fish" />
+            <End Role="PurchaseInvoiceItem" EntitySet="PurchaseInvoiceItems" />
+          </AssociationSet>
           <AssociationSet Name="FK_InvoiceItem_Invoice" Association="Self.FK_InvoiceItem_Invoice">
             <End Role="Invoice" EntitySet="Invoices" />
             <End Role="InvoiceItem" EntitySet="InvoiceItems" />
           </AssociationSet>
-          <EntitySet Name="PaymentVouchers" EntityType="KLDFishStallAccountsModel.PaymentVoucher" />
-          <EntitySet Name="PurchaseInvoices" EntityType="KLDFishStallAccountsModel.PurchaseInvoice" />
-          <EntitySet Name="PurchaseInvoiceItems" EntityType="KLDFishStallAccountsModel.PurchaseInvoiceItem" />
-          <EntitySet Name="Suppliers" EntityType="KLDFishStallAccountsModel.Supplier" />
-          <AssociationSet Name="FK_PurchaseInvoiceItem_Fish" Association="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_Fish">
-            <End Role="Fish" EntitySet="Fish" />
-            <End Role="PurchaseInvoiceItem" EntitySet="PurchaseInvoiceItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PaymentVoucher_Supplier" Association="KLDFishStallAccountsModel.FK_PaymentVoucher_Supplier">
+          <AssociationSet Name="FK_PaymentVoucher_Supplier" Association="Self.FK_PaymentVoucher_Supplier">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="PaymentVoucher" EntitySet="PaymentVouchers" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseInvoice_Supplier" Association="KLDFishStallAccountsModel.FK_PurchaseInvoice_Supplier">
+          <AssociationSet Name="FK_PurchaseInvoice_Supplier" Association="Self.FK_PurchaseInvoice_Supplier">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="PurchaseInvoice" EntitySet="PurchaseInvoices" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseInvoiceItem_PurchaseInvoice" Association="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_PurchaseInvoice">
+          <AssociationSet Name="FK_PurchaseInvoiceItem_PurchaseInvoice" Association="Self.FK_PurchaseInvoiceItem_PurchaseInvoice">
             <End Role="PurchaseInvoice" EntitySet="PurchaseInvoices" />
             <End Role="PurchaseInvoiceItem" EntitySet="PurchaseInvoiceItems" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="PaymentVoucher">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FK_ID_Supplier" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Amount" Type="Double" Nullable="false" />
-          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Supplier" Relationship="KLDFishStallAccountsModel.FK_PaymentVoucher_Supplier" FromRole="PaymentVoucher" ToRole="Supplier" />
-        </EntityType>
-        <EntityType Name="PurchaseInvoice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FK_ID_Supplier" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Discount" Type="Double" Nullable="false" />
-          <Property Name="Total" Type="Double" Nullable="false" />
-          <Property Name="Balance" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Supplier" Relationship="KLDFishStallAccountsModel.FK_PurchaseInvoice_Supplier" FromRole="PurchaseInvoice" ToRole="Supplier" />
-          <NavigationProperty Name="PurchaseInvoiceItems" Relationship="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_PurchaseInvoice" FromRole="PurchaseInvoice" ToRole="PurchaseInvoiceItem" />
-        </EntityType>
-        <EntityType Name="PurchaseInvoiceItem">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FK_ID_PurchaseInvoice" Type="Int32" Nullable="false" />
-          <Property Name="FK_ID_Fish" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Double" Nullable="false" />
-          <Property Name="Rate" Type="Double" Nullable="false" />
-          <Property Name="Total" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Fish" Relationship="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_Fish" FromRole="PurchaseInvoiceItem" ToRole="Fish" />
-          <NavigationProperty Name="PurchaseInvoice" Relationship="KLDFishStallAccountsModel.FK_PurchaseInvoiceItem_PurchaseInvoice" FromRole="PurchaseInvoiceItem" ToRole="PurchaseInvoice" />
-        </EntityType>
-        <EntityType Name="Supplier">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Balance" Type="Double" Nullable="false" />
-          <NavigationProperty Name="PaymentVouchers" Relationship="KLDFishStallAccountsModel.FK_PaymentVoucher_Supplier" FromRole="Supplier" ToRole="PaymentVoucher" />
-          <NavigationProperty Name="PurchaseInvoices" Relationship="KLDFishStallAccountsModel.FK_PurchaseInvoice_Supplier" FromRole="Supplier" ToRole="PurchaseInvoice" />
-        </EntityType>
-        <Association Name="FK_PurchaseInvoiceItem_Fish">
-          <End Type="KLDFishStallAccountsModel.Fish" Role="Fish" Multiplicity="1" />
-          <End Type="KLDFishStallAccountsModel.PurchaseInvoiceItem" Role="PurchaseInvoiceItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Fish">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PurchaseInvoiceItem">
-              <PropertyRef Name="FK_ID_Fish" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PaymentVoucher_Supplier">
-          <End Type="KLDFishStallAccountsModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="KLDFishStallAccountsModel.PaymentVoucher" Role="PaymentVoucher" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PaymentVoucher">
-              <PropertyRef Name="FK_ID_Supplier" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseInvoice_Supplier">
-          <End Type="KLDFishStallAccountsModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="KLDFishStallAccountsModel.PurchaseInvoice" Role="PurchaseInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PurchaseInvoice">
-              <PropertyRef Name="FK_ID_Supplier" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseInvoiceItem_PurchaseInvoice">
-          <End Type="KLDFishStallAccountsModel.PurchaseInvoice" Role="PurchaseInvoice" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="KLDFishStallAccountsModel.PurchaseInvoiceItem" Role="PurchaseInvoiceItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseInvoice">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PurchaseInvoiceItem">
-              <PropertyRef Name="FK_ID_PurchaseInvoice" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -573,6 +574,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PaymentVouchers">
+            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.PaymentVoucher">
+              <MappingFragment StoreEntitySet="PaymentVoucher">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FK_ID_Supplier" ColumnName="FK_ID_Supplier" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseInvoices">
+            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.PurchaseInvoice">
+              <MappingFragment StoreEntitySet="PurchaseInvoice">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FK_ID_Supplier" ColumnName="FK_ID_Supplier" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseInvoiceItems">
+            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.PurchaseInvoiceItem">
+              <MappingFragment StoreEntitySet="PurchaseInvoiceItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FK_ID_PurchaseInvoice" ColumnName="FK_ID_PurchaseInvoice" />
+                <ScalarProperty Name="FK_ID_Fish" ColumnName="FK_ID_Fish" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="KLDFishStallAccountsModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -580,52 +627,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PaymentVouchers">
-            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.PaymentVoucher">
-              <MappingFragment StoreEntitySet="PaymentVoucher">
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="FK_ID_Supplier" ColumnName="FK_ID_Supplier" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseInvoices">
-            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.PurchaseInvoice">
-              <MappingFragment StoreEntitySet="PurchaseInvoice">
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="FK_ID_Supplier" ColumnName="FK_ID_Supplier" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseInvoiceItems">
-            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.PurchaseInvoiceItem">
-              <MappingFragment StoreEntitySet="PurchaseInvoiceItem">
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="FK_ID_Fish" ColumnName="FK_ID_Fish" />
-                <ScalarProperty Name="FK_ID_PurchaseInvoice" ColumnName="FK_ID_PurchaseInvoice" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="KLDFishStallAccountsModel.Supplier">
-              <MappingFragment StoreEntitySet="Supplier">
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -132,12 +132,12 @@
                     class="fa fa-eye fa-fw"></i> View</button>
               </div>
               <div class="col-lg-2">
-                <button (click)="print('cashVouchersTable')" class="btn btn-success btn-block"><i class="fa fa-print fa-fw">
+                <button (click)="print('paymentVouchersTable')" class="btn btn-success btn-block"><i class="fa fa-print fa-fw">
                   </i> Print</button>
               </div>
             </div>
             <br>
-            <app-grid id='cashVouchersTable' #cashVouchersTable [(options)]="_paymentVouchersGridOptions" (rowSelectionChanged)="selectedPaymentVoucherChanged($event)"></app-grid>
+            <app-grid id='paymentVouchersTable' #paymentVouchersTable [(options)]="_paymentVouchersGridOptions" (rowSelectionChanged)="selectedPaymentVoucherChanged($event)"></app-grid>
           </div>
         </div>
       </div>
