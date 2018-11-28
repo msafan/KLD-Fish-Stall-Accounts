@@ -105,6 +105,8 @@ export class CustomerStatement {
   ID: number;
   Amount: number;
   Balance: number;
+  Debit: number;
+  Credit: number;
 }
 
 export class SupplierStatement {
@@ -113,6 +115,8 @@ export class SupplierStatement {
   ID: number;
   Amount: number;
   Balance: number;
+  Debit: number;
+  Credit: number;
 }
 
 export class User {

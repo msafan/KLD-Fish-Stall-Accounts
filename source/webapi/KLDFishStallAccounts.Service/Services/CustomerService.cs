@@ -99,6 +99,7 @@ namespace KLDFishStallAccounts.Service.Services
                     x.Date <= dateRange.EndDate).
                 Select(x => new CustomerStatement()
                 {
+                    Credit = x.Total,
                     Amount = x.Total,
                     Date = x.Date,
                     ID = x.ID,
@@ -112,6 +113,7 @@ namespace KLDFishStallAccounts.Service.Services
                     x.Date <= dateRange.EndDate).
                 Select(x => new CustomerStatement()
                 {
+                    Debit = x.Amount,
                     Amount = x.Amount,
                     Date = x.Date,
                     ID = x.ID,
@@ -140,7 +142,6 @@ namespace KLDFishStallAccounts.Service.Services
             {
                 ID = int.MinValue,
                 Particulars = "Opening Balance",
-                Amount = currentBalance,
                 Balance = currentBalance
             });
             customerStatementsToReturn.Add(new CustomerStatement()

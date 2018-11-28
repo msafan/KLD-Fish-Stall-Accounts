@@ -100,6 +100,7 @@ namespace KLDFishStallAccounts.Service.Services
                 Select(x => new SupplierStatement()
                 {
                     Amount = x.Total,
+                    Credit = x.Total,
                     Date = x.Date,
                     ID = x.ID,
                     Particulars = "Purchase Invoice"
@@ -113,6 +114,7 @@ namespace KLDFishStallAccounts.Service.Services
                 Select(x => new SupplierStatement()
                 {
                     Amount = x.Amount,
+                    Debit = x.Amount,
                     Date = x.Date,
                     ID = x.ID,
                     Particulars = "Payment Voucher"
@@ -140,7 +142,6 @@ namespace KLDFishStallAccounts.Service.Services
             {
                 ID = int.MinValue,
                 Particulars = "Opening Balance",
-                Amount = currentBalance,
                 Balance = currentBalance
             });
             supplierStatementsToReturn.Add(new SupplierStatement()

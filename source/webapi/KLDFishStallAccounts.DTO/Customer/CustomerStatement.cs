@@ -16,6 +16,10 @@ namespace KLDFishStallAccounts.DTO.Customer
 
         public double Amount { get; set; }
 
+        public double Credit { get; set; }
+
+        public double Debit { get; set; }
+
         public double Balance { get; set; }
     }
 }
