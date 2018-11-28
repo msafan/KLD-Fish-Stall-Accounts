@@ -1,0 +1,69 @@
+<div *ngIf="!sharedModel.User">
+  <!-- Work Area -->
+  <notifier-container></notifier-container>
+  <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="sharedModel.User">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <div id="wrapper">
+    <!-- Navigation panel -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]='["/home"]'><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-wrench fa-fw"></i> Manage </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" [routerLink]='["/manage-customer"]'><i class="fa fa-user-md fa-fw"></i> Customers</a>
+          <a class="dropdown-item" [routerLink]='["/manage-fish"]'><i class="fa fa-rocket fa-fw"></i> Fish</a>
+          <a class="dropdown-item" [routerLink]='["/manage-user"]'><i class="fa fa-user fa-fw"></i> User</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope-o fa-fw"></i> Sale Invice</a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" [routerLink]='["/new-invoice"]'><i class="fa fa-plus fa-fw"></i> New Invoice</a>
+          <a class="dropdown-item" [routerLink]='["/list-invoice"]'><i class="fa fa-th-list fa-fw"></i> List Invoices</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]='["/cash-voucher"]'><i class="fa fa-dollar fa-fw"></i> Cash Voucher</a>
+      </li>
+      <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-plus fa-fw"></i> New </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" [routerLink]='["/new-invoice"]'><i class="fa fa-envelope-o fa-fw"></i> Invoice</a>
+          <a class="dropdown-item" [routerLink]='["/new-cash-voucher"]'><i class="fa fa-dollar fa-fw"></i> Cash
+            Voucher</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" [routerLink]='[]' id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"> <i class="fa fa-th-list fa-fw"></i> List </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" [routerLink]='["/list-invoice"]'><i class="fa fa-envelope-o fa-fw"></i> Invoice</a>
+          <a class="dropdown-item" [routerLink]='["/list-cash-voucher"]'><i class="fa fa-dollar fa-fw"></i> Cash
+            Voucher</a>
+        </div>
+      </li> -->
+    </ul>
+
+    <div id="content-wrapper">
+      <div class="container-fluid">
+        <notifier-container></notifier-container>
+
+        <!-- Work Area -->
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- Sticky Footer -->
+      <app-footer></app-footer>
+    </div>
+  </div>
+</div>

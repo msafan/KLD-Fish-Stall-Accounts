@@ -1,0 +1,146 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]='["/manage-customer"]'>Customer</a>
+  </li>
+  <li class="breadcrumb-item active">Details</li>
+</ol>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label>Name</label>
+      <div class="form-control">{{_customer.Name}}</div>
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <div class="form-control">{{_customer.PhoneNumber}}</div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label>Address</label>
+      <div class="form-control" style="height:auto">{{_customer.Address}}</div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label>Balance</label>
+      <div class="form-control">{{_customer.Balance}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#statement" role="tab" aria-controls="statement"
+          aria-selected="true">Statement</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#invoices" role="tab" aria-controls="invoices"
+          aria-selected="false">Invoices</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cashVouchers" role="tab" aria-controls="cashVouchers"
+          aria-selected="false">Cash Vouchers</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="statement" role="tabpanel" aria-labelledby="statement-tab">
+        <div class="row">
+          <div class="col-lg-12">
+            <br>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label>Start Date</label>
+                  <div class="input-group">
+                    <input class="form-control" readonly name="dp1" #c="ngModel" [maxDate]="_endDate" [(ngModel)]="_startDate"
+                      ngbDatepicker #d1="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label>End Date</label>
+                  <div class="input-group">
+                    <input class="form-control" readonly name="dp2" #c="ngModel" [minDate]="_startDate" [(ngModel)]="_endDate"
+                      ngbDatepicker #d2="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="form-group">
+                  <label> &nbsp;</label>
+                  <button class="form-control btn btn-success" [disabled]="!_startDate || !_endDate" (click)="filter()"><i class="fa fa-filter fa-fw"></i>
+                    Filter</button>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="form-group">
+                  <label> &nbsp;</label>
+                  <button class="form-control btn btn-primary" [disabled]="!_selectedCustomerStatement" (click)="viewCustomerStatement()"><i
+                      class="fa fa-eye fa-fw"></i>
+                    View</button>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="form-group">
+                  <label> &nbsp;</label>
+                  <button class="form-control  btn btn-success btn-block" (click)="print('customerStatementTable')"><i
+                      class="fa fa-print fa-fw"></i> Print</button></div>
+              </div>
+            </div>
+            <br>
+            <app-grid id="customerStatementTable" #customerStatementTable [(options)]="_customerStatementGridOptions" (rowSelectionChanged)="selectedCustomerStatementChanged($event)"></app-grid>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+        <div class="row">
+          <div class="col-lg-12">
+            <br>
+            <div class="row">
+              <div class="col-lg-2">
+                <button [disabled]="!_selectedInvoice" (click)="viewInvoice()" class="btn btn-primary btn-block"><i
+                    class="fa fa-eye fa-fw"></i> View</button>
+              </div>
+              <div class="col-lg-2">
+                <button (click)="print('invoicesTable')" class="btn btn-success btn-block"><i class="fa fa-print fa-fw">
+                  </i> Print</button>
+              </div>
+            </div>
+            <br>
+            <app-grid id='invoicesTable' #invoicesTable [(options)]="_invoicesGridOptions" (rowSelectionChanged)="selectedInvoiceChanged($event)"></app-grid>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="cashVouchers" role="tabpanel" aria-labelledby="cashVouchers-tab">
+        <div class="row">
+          <div class="col-lg-12">
+            <br>
+            <div class="row">
+              <div class="col-lg-2">
+                <button [disabled]="!_selectedCashVoucher" (click)="viewCashVoucher()" class="btn btn-primary btn-block"><i
+                    class="fa fa-eye fa-fw"></i> View</button>
+              </div>
+              <div class="col-lg-2">
+                <button (click)="print('cashVouchersTable')" class="btn btn-success btn-block"><i class="fa fa-print fa-fw">
+                  </i> Print</button>
+              </div>
+            </div>
+            <br>
+            <app-grid id='cashVouchersTable' #cashVouchersTable [(options)]="_cashVouchersGridOptions" (rowSelectionChanged)="selectedCashVoucherChanged($event)"></app-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

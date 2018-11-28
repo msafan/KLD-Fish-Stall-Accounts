@@ -1,0 +1,86 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a [routerLink]='[]'>View</a>
+  </li>
+  <li class="breadcrumb-item active">Invoice</li>
+</ol>
+
+<div class="row" id="print-section">
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="form-group">
+          <div class="form-control"><strong>Voucher No:</strong> {{_cashVoucher.ID}}</div>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <h1>KLD Fish Stall</h1>
+        <strong>Wholesale, Retail & Hotel Supply</strong><br>
+        Al-Rasool Complex, Shop No 3<br>
+        R.K Road, Yeshwanthpur, Bangalore - 22
+      </div>
+      <div class="col-lg-3 text-right">
+        <div class="form-group">
+          <div class="form-control"><strong>Date:</strong> {{_cashVoucher.Date | date}}</div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <div class="form-group">
+          <div class="form-control text-center" style="height: auto;">
+            <h3>Payment Reciept</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4"></div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        Cash received from <u>{{_cashVoucher.Customer.Name}}</u> of Rs. <u>{{_cashVoucher.Amount}}</u> for
+        purchase of fishes.
+        <br>
+        <br>
+        Remarks: <u>{{_cashVoucher.Remarks}}</u>
+        <br>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="row">
+      <div class="col-lg-3 text-center">
+        <hr>
+        Signature
+      </div>
+      <div class="col-lg-6"></div>
+      <div class="col-lg-3 text-center">
+        <div class="form-group">
+          <div class="form-control" style="height:auto">
+            <h2>Rs. {{_cashVoucher.Amount}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="row">
+  <div class="col-lg-4 text-right">
+  </div>
+  <div class="col-lg-4 text-center">
+    <button class="btn btn-success" (click)="print()"><i class="fa fa-print fa-fw"></i> Print</button>
+  </div>
+  <div class="col-lg-4 text-left">
+  </div>
+</div>
+<br>
