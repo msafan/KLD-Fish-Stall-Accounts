@@ -102,7 +102,7 @@ namespace KLDFishStallAccounts.Service.Services
                     Amount = x.Total,
                     Date = x.Date,
                     ID = x.ID,
-                    Particulars = "Sales Invoice"
+                    Particulars = "Purchase Invoice"
                 }));
 
             supplierStatements.AddRange(_unitOfWork.PaymentVoucher.
@@ -115,7 +115,7 @@ namespace KLDFishStallAccounts.Service.Services
                     Amount = x.Amount,
                     Date = x.Date,
                     ID = x.ID,
-                    Particulars = "Cash Payment Voucher"
+                    Particulars = "Payment Voucher"
                 }));
 
             var supplierStatementsToReturn = supplierStatements.OrderBy(x => x.Date).ToList();
@@ -131,7 +131,7 @@ namespace KLDFishStallAccounts.Service.Services
             supplierStatementsToReturn.ForEach(x =>
             {
                 x.Balance = currentBalance;
-                currentBalance += (x.Amount * (x.Particulars == "Sales Invoice" ? -1 : 1));
+                currentBalance += (x.Amount * (x.Particulars == "Purchase Invoice" ? -1 : 1));
             });
 
             supplierStatementsToReturn.Reverse();
