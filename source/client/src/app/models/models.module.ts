@@ -21,6 +21,14 @@ export class Customer {
   Balance: number;
 }
 
+export class Supplier {
+  ID: number;
+  Name: string;
+  Address: string;
+  PhoneNumber: string;
+  Balance: number;
+}
+
 export class CashVoucher {
   ID: number;
   FK_ID_Customer: number;
@@ -28,6 +36,15 @@ export class CashVoucher {
   Amount: number;
   Remarks: string;
   Customer: Customer;
+}
+
+export class PaymentVoucher {
+  ID: number;
+  FK_ID_Supplier: number;
+  Date: Date;
+  Amount: number;
+  Remarks: string;
+  Supplier: Supplier;
 }
 
 export class Invoice {
@@ -41,7 +58,27 @@ export class Invoice {
   Customer: Customer;
 }
 
+export class PurchaseInvoice {
+  ID: number;
+  Date: Date;
+  FK_ID_Supplier: number;
+  Discount: number;
+  Total: number;
+  Balance: number;
+  PurchaseInvoiceItems: Array<PurchaseInvoiceItem>;
+  Supplier: Supplier;
+}
+
 export class InvoiceItem {
+  ID: number;
+  FK_ID_Fish: number;
+  Quantity: number;
+  Rate: number;
+  Total: number;
+  Fish: Fish;
+}
+
+export class PurchaseInvoiceItem {
   ID: number;
   FK_ID_Fish: number;
   Quantity: number;
@@ -63,6 +100,14 @@ export class WebApiError {
 }
 
 export class CustomerStatement {
+  Date: Date;
+  Particulars: string;
+  ID: number;
+  Amount: number;
+  Balance: number;
+}
+
+export class SupplierStatement {
   Date: Date;
   Particulars: string;
   ID: number;
