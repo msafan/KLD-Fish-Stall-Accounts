@@ -25,6 +25,13 @@ import { CashVoucherComponent } from './cash-voucher/cash-voucher.component';
 import { ViewCashVoucherComponent } from './view-cash-voucher/view-cash-voucher.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
+import { PaymentVoucherComponent } from './payment-voucher/payment-voucher.component';
+import { ListPurchaseInvoiceComponent } from './list-purchase-invoice/list-purchase-invoice.component';
+import { ManageSupplierComponent } from './manage-supplier/manage-supplier.component';
+import { NewPurchaseInvoiceComponent } from './new-purchase-invoice/new-purchase-invoice.component';
+import { ViewPaymentVoucherComponent } from './view-payment-voucher/view-payment-voucher.component';
+import { ViewSupplierComponent } from './view-supplier/view-supplier.component';
+import { ViewPurchaseInvoiceComponent } from './view-purchase-invoice/view-purchase-invoice.component';
 
 /**
  * Custom angular notifier options
@@ -90,7 +97,14 @@ const customNotifierOptions: NotifierOptions = {
     CashVoucherComponent,
     ViewCashVoucherComponent,
     SettingsComponent,
-    ManageUserComponent
+    ManageUserComponent,
+    PaymentVoucherComponent,
+    ListPurchaseInvoiceComponent,
+    ManageSupplierComponent,
+    NewPurchaseInvoiceComponent,
+    ViewPaymentVoucherComponent,
+    ViewSupplierComponent,
+    ViewPurchaseInvoiceComponent
   ],
   imports: [
     BrowserModule,

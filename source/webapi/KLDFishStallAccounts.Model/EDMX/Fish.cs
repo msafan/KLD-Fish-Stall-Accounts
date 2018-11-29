@@ -18,6 +18,7 @@ namespace KLDFishStallAccounts.Model.EDMX
         public Fish()
         {
             this.InvoiceItems = new HashSet<InvoiceItem>();
+            this.PurchaseInvoiceItems = new HashSet<PurchaseInvoiceItem>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,7 @@ namespace KLDFishStallAccounts.Model.EDMX
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseInvoiceItem> PurchaseInvoiceItems { get; set; }
     }
 }

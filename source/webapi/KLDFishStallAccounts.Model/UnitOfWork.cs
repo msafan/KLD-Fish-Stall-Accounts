@@ -7,10 +7,14 @@ namespace KLDFishStallAccounts.Model
         private KLDFishStallAccountsEntities dataContext;
 
         private Repository<CashVoucher> _cashVoucher;
+        private Repository<PaymentVoucher> _paymentVoucher;
         private Repository<Customer> _customer;
+        private Repository<Supplier> _supplier;
         private Repository<Fish> _fish;
         private Repository<Invoice> _invoice;
+        private Repository<PurchaseInvoice> _purchaseInvoice;
         private Repository<InvoiceItem> _invoiceItem;
+        private Repository<PurchaseInvoiceItem> _purchaseInvoiceItem;
         private Repository<User> _user;
 
         public UnitOfWork()
@@ -30,11 +34,27 @@ namespace KLDFishStallAccounts.Model
             }
         }
 
+        public Repository<PaymentVoucher> PaymentVoucher
+        {
+            get
+            {
+                return _paymentVoucher ?? (_paymentVoucher = new Repository<PaymentVoucher>(dataContext));
+            }
+        }
+
         public Repository<Customer> Customer
         {
             get
             {
                 return _customer ?? (_customer = new Repository<Customer>(dataContext));
+            }
+        }
+
+        public Repository<Supplier> Supplier
+        {
+            get
+            {
+                return _supplier ?? (_supplier = new Repository<Supplier>(dataContext));
             }
         }
 
@@ -54,11 +74,27 @@ namespace KLDFishStallAccounts.Model
             }
         }
 
+        public Repository<PurchaseInvoice> PurchaseInvoice
+        {
+            get
+            {
+                return _purchaseInvoice ?? (_purchaseInvoice = new Repository<PurchaseInvoice>(dataContext));
+            }
+        }
+
         public Repository<InvoiceItem> InvoiceItem
         {
             get
             {
                 return _invoiceItem ?? (_invoiceItem = new Repository<InvoiceItem>(dataContext));
+            }
+        }
+
+        public Repository<PurchaseInvoiceItem> PurchaseInvoiceItem
+        {
+            get
+            {
+                return _purchaseInvoiceItem ?? (_purchaseInvoiceItem = new Repository<PurchaseInvoiceItem>(dataContext));
             }
         }
 

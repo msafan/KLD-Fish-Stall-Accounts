@@ -30,7 +30,8 @@ export class ViewCustomerComponent extends BaseComponentModule {
       new GridColumn('Date', 'Date', 'date', true, new DateFilter('', 'eq', '', '')),
       new GridColumn('ID', '#', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Particulars', 'Particulars', 'string', true, new TextFilter('', 'eq')),
-      new GridColumn('Amount', 'Amount', 'number', true, new NumberFilter('', 'eq')),
+      new GridColumn('Credit', 'Credit', 'number', true, new NumberFilter('', 'eq')),
+      new GridColumn('Debit', 'Debit', 'number', true, new NumberFilter('', 'eq')),
       new GridColumn('Balance', 'Balance', 'number', true, new NumberFilter('', 'eq'))
     ],
     Filterable: true,
@@ -104,7 +105,14 @@ export class ViewCustomerComponent extends BaseComponentModule {
       if (error) {
         this.notifier.notify('error', error.error.ExceptionMessage ? error.error.ExceptionMessage : error.message);
       } else if (response) {
-        response.forEach(x => { if (x.ID == -2147483648) x.ID = 0; })
+        response.forEach(x => {
+          if (x.ID == -2147483648)
+            x.ID = 0;
+          if (x.Debit == 0)
+            x.Debit = undefined;
+          if (x.Credit == 0)
+            x.Credit = undefined;
+        })
         this._customerStatement.clear();
         this._customerStatement.addRows(response);
       }

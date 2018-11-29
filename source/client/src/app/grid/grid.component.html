@@ -4,7 +4,7 @@
       <tr>
         <th *ngFor="let column of _options.Columns">{{column.Title}}</th>
       </tr>
-      <tr *ngIf="_options.Filterable">
+      <tr *ngIf="_options.Filterable" class="d-print-none">
         <th *ngFor="let column of _options.Columns">
           <input class="form-control" [(ngModel)]="column.Filter.Key" (input)="searchChanged()" /></th>
       </tr>

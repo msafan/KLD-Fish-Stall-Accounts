@@ -56,6 +56,9 @@ export class GridComponent implements OnInit {
         const key = column.Filter.Key ? column.Filter.Key.toLowerCase() : '';
         this._rowsToDisplay = this._rowsToDisplay.filter(item => {
           let value = item[columnName] !== undefined ? item[columnName].toString().toLowerCase() : undefined;
+          if (value == undefined && column.Type === 'number')
+            value = '0';
+
           if (column.Type === 'date') {
             value = this.datePipe.transform(value).toLowerCase();
           }

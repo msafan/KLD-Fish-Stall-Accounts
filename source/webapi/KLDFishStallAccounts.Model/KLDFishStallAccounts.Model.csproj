@@ -81,6 +81,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EDMX\PaymentVoucher.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\PurchaseInvoice.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\PurchaseInvoiceItem.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EDMX\Supplier.cs">
+      <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
+    </Compile>
     <Compile Include="EDMX\User.cs">
       <DependentUpon>KLDFishStallAccounts.tt</DependentUpon>
     </Compile>
@@ -88,18 +100,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="UnitOfWork.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="EDMX\KLDFishStallAccounts.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
-      <LastGenOutput>KLDFishStallAccounts.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="EDMX\KLDFishStallAccounts.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
-      <LastGenOutput>KLDFishStallAccounts.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
@@ -114,6 +114,19 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="EDMX\KLDFishStallAccounts.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
+      <LastGenOutput>KLDFishStallAccounts.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EDMX\KLDFishStallAccounts.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KLDFishStallAccounts.edmx</DependentUpon>
+      <LastGenOutput>KLDFishStallAccounts.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
